@@ -1,0 +1,95 @@
+# Lumière — fastlane configuration
+#
+# Lanes:
+#   gen           regenerate Lumiere.xcodeproj from project.yml
+#   certificates  sync code-signing via match (App Store Connect API key)
+#   build         build-only (no archive, no upload) — fast CI smoke
+#   beta          build Release archive + upload to TestFlight
+#
+# All lanes that touch App Store Connect use the API key authentication
+# (no Apple ID + 2FA dance). Required env vars:
+#
+#   APP_STORE_CONNECT_API_KEY_ID         (Key ID — short string)
+#   APP_STORE_CONNECT_API_KEY_ISSUER_ID  (Issuer ID — UUID)
+#   APP_STORE_CONNECT_API_KEY_CONTENT    (.p8 file contents, base64-encoded)
+#   DEVELOPMENT_TEAM_ID                  (Apple Developer Team ID)
+#   MATCH_PASSWORD                       (passphrase for the match repo)
+#   MATCH_GIT_URL                        (private git repo URL for match)
+#
+# See SETUP.md for one-time provisioning steps.
+
+default_platform(:ios)
+
+PROJECT = "Lumiere.xcodeproj"
+SCHEME  = "Lumiere"
+APP_ID  = "com.need-singularity.lumiere"
+
+platform :ios do
+  before_all do
+    setup_ci if ENV["CI"]
+  end
+
+  desc "Regenerate Lumiere.xcodeproj from project.yml"
+  lane :gen do
+    sh "cd .. && xcodegen generate"
+  end
+
+  desc "Sync code-signing via match (appstore type)"
+  lane :certificates do
+    api_key = app_store_connect_api_key(
+      key_id:                ENV.fetch("APP_STORE_CONNECT_API_KEY_ID"),
+      issuer_id:             ENV.fetch("APP_STORE_CONNECT_API_KEY_ISSUER_ID"),
+      key_content:           ENV.fetch("APP_STORE_CONNECT_API_KEY_CONTENT"),
+      is_key_content_base64: true
+    )
+    sync_code_signing(
+      type:           "appstore",
+      app_identifier: [APP_ID],
+      readonly:       ENV["CI"] ? true : false,
+      api_key:        api_key
+    )
+  end
+
+  desc "Build-only smoke (no archive, no upload)"
+  lane :build do
+    gen
+    build_app(
+      project:         PROJECT,
+      scheme:          SCHEME,
+      configuration:   "Release",
+      skip_codesigning: true,
+      skip_archive:    true,
+      destination:     "generic/platform=iOS",
+      clean:           true
+    )
+  end
+
+  desc "Build Release archive + upload to TestFlight"
+  lane :beta do
+    gen
+    certificates
+
+    build_app(
+      project:          PROJECT,
+      scheme:           SCHEME,
+      configuration:    "Release",
+      export_method:    "app-store",
+      output_directory: "build",
+      output_name:      "Lumiere.ipa",
+      clean:            true
+    )
+
+    api_key = app_store_connect_api_key(
+      key_id:                ENV.fetch("APP_STORE_CONNECT_API_KEY_ID"),
+      issuer_id:             ENV.fetch("APP_STORE_CONNECT_API_KEY_ISSUER_ID"),
+      key_content:           ENV.fetch("APP_STORE_CONNECT_API_KEY_CONTENT"),
+      is_key_content_base64: true
+    )
+
+    upload_to_testflight(
+      api_key:                              api_key,
+      skip_waiting_for_build_processing:    true,
+      changelog: ENV["RELEASE_CHANGELOG"] || "Lumière TestFlight build #{Time.now.utc.strftime('%Y-%m-%d %H:%M UTC')}"
+    )
+  end
+end

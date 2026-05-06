@@ -1,0 +1,5 @@
+app_identifier "com.need-singularity.lumiere"
+# itc_team_id and team_id are inferred from the App Store Connect API
+# key context at runtime — no need to hard-code Team ID here. The
+# DEVELOPMENT_TEAM_ID env var is consumed by xcodegen / Xcode build
+# settings instead.

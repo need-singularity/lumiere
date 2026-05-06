@@ -1,0 +1,64 @@
+name: Release (TestFlight)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      changelog:
+        description: 'TestFlight changelog'
+        required: false
+        default: 'Manual TestFlight upload'
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  testflight:
+    name: TestFlight beta
+    runs-on: macos-15
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          xcode-select -p
+          xcodebuild -version
+          ruby --version
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: fastlane ios beta
+        env:
+          CI: 'true'
+          APP_STORE_CONNECT_API_KEY_ID:        ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT:   ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+          DEVELOPMENT_TEAM_ID:                 ${{ secrets.DEVELOPMENT_TEAM_ID }}
+          MATCH_PASSWORD:                      ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_URL:                       ${{ secrets.MATCH_GIT_URL }}
+          MATCH_GIT_BASIC_AUTHORIZATION:       ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          RELEASE_CHANGELOG:                   ${{ github.event.inputs.changelog || format('Tag {0}', github.ref_name) }}
+        run: bundle exec fastlane ios beta
+
+      - name: Upload .ipa artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lumiere-${{ github.ref_name }}.ipa
+          path: build/Lumiere.ipa
+          if-no-files-found: warn
+          retention-days: 14

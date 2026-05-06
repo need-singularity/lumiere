@@ -27,6 +27,14 @@ Package.resolved
 *.xcodeproj
 Sources/Lumiere/Generated-Info.plist
 
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/test_output
+build/
+*.ipa
+*.dSYM.zip
+
 # Swift Playgrounds
 timeline.xctimeline
 playground.xcworkspace
