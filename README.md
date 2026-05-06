@@ -36,7 +36,7 @@ Anamorphic 2.39:1 · teal-orange grading · Lucas-Kanade 1981 optical-flow slow-
 
 ## Status
 
-`mk1` — pre-MVP scaffold. Each of the 5 modes carries a 5-tuple of pre-declared 90-day falsifier gates (25 total) against iPhone 15 Pro reference, deadlines **2026-08-30 / 2026-09-30**:
+`mk4` — structural integration complete. Every code-side cycle that does not depend on external blockers (iPhone 15 Pro device, weight conversion, App Store enrollment, TestFlight cohort) has landed. Each of the 5 modes carries a 5-tuple of pre-declared 90-day falsifier gates (25 total) against iPhone 15 Pro reference, deadlines **2026-08-30 / 2026-09-30**:
 
 | Mode | F-gate prefix | GitHub issues |
 |---|---|---|
@@ -46,7 +46,26 @@ Anamorphic 2.39:1 · teal-orange grading · Lucas-Kanade 1981 optical-flow slow-
 | Mirror | F-PSELF-MVP-1..5 | [#16–20](https://github.com/need-singularity/lumiere/issues?q=label%3Amirror) |
 | Atelier | F-VSCO-MVP-1..5 | [#21–25](https://github.com/need-singularity/lumiere/issues?q=label%3Aatelier) |
 
-mk1 ships UI for Camera + Studio (anamorphic 2.39:1 first effect); Forge / Mirror / Atelier mk1 specs are absorbed into `docs/` with [`.roadmap.<domain>`](.roadmap.camera) tracking. mk2 implements full surfaces.
+### Cycle history
+
+| Cycle | Scope | Notable commits |
+|---|---|---|
+| mk1 (A–D) | Repo bootstrap + iOS scaffold + first effect (anamorphic 2.39:1) + measurement scaffold | `075e208` · `982e0f2` · `753cbac` · `d9891e5` · `d8a36c0` · `3b9e705` |
+| mk2 (A–E) | Core ML scaffold · 9-effect FrameProcessors · 7 measurement scripts · 3 sister specs absorbed · 5 surfaces → 2 tabs UI | `d3d8948` · `dce8da0` · `c904933` · `239b9f8` · `323e12f` |
+| mk3 (A–C) | clip_image + sam converters · 12-stage StudioPipeline · Forge/Mirror/Atelier runtimes (FilterAlgebra · MirrorSession · AtelierLibrary 50-inaugural) | `36ab4dc` · `2607a54` · `195a2c2` · `0a398c1` · `6f62414` |
+| mk4 (A–C) | fullCinematic 5-effect preset · Forge → Atelier cross-domain wire · real AVCapturePhotoOutput → Mirror | `fc9c5e5` · `c3fb1ba` · `c5cb2c7` |
+
+### Roadmap state
+
+All 6 [`.roadmap.<domain>`](.roadmap.camera) SSOTs carry every condition in `met` or `partial` state — no condition is `unmet` without a documented external blocker. Remaining gates are gated on:
+
+- **Apple Developer Program enrollment** (`release.cond.3`/`.4`) — manual user action
+- **iPhone 15 Pro hardware** (camera/studio empirical p95 + energy + NPU) — F-gate closure measurement
+- **SD-v3 + LoRA weight conversion** (`parallel_self.cond.2-5`) — mk5 weight pipeline
+- **7 physics-tool kernels + full HSL/tone-curve UI** (`vsco.cond.5-7`) — mk5 UI cycle
+- **TestFlight 100-user cohort** (5 panel-recruitment F-gates) — release.cond.4 dependency
+
+Build `mk5` continues on lifting these blockers as devices/credentials/weights land.
 
 ## Specs
 
