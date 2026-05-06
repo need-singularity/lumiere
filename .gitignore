@@ -72,11 +72,16 @@ venv/
 *.coreml
 *.mlmodel
 *.mlmodelc
+*.mlpackage/
 *.tflite
 weights/
 checkpoints/
 runs/
 wandb/
+
+# Generated Core ML models drop here (Models/README.md explains)
+Models/*.mlpackage
+Models/*.mlmodelc
 
 # Editor
 .vscode/
