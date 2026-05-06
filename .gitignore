@@ -23,6 +23,10 @@ Carthage/Build/
 .build/
 Package.resolved
 
+# xcodegen-generated (regenerated from project.yml)
+*.xcodeproj
+Sources/Lumiere/Generated-Info.plist
+
 # Swift Playgrounds
 timeline.xctimeline
 playground.xcworkspace

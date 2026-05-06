@@ -1,0 +1,75 @@
+name: iOS
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    name: Build & Test (iOS)
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          xcode-select -p
+          xcodebuild -version
+          swift --version
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Show schemes & destinations
+        run: |
+          xcodebuild -project Lumiere.xcodeproj -list
+          xcrun simctl list runtimes
+          xcrun simctl list devices available | head -30
+
+      - name: Resolve simulator destination
+        id: sim
+        run: |
+          DEST=$(xcrun simctl list devices available --json | python3 -c "
+          import json, sys
+          data = json.load(sys.stdin)
+          for runtime, devices in data['devices'].items():
+              if 'iOS' not in runtime: continue
+              for d in devices:
+                  if d.get('isAvailable') and 'iPhone' in d['name']:
+                      print(f\"platform=iOS Simulator,id={d['udid']}\")
+                      sys.exit(0)
+          ")
+          echo "destination=$DEST" >> "$GITHUB_OUTPUT"
+          echo "Picked: $DEST"
+
+      - name: Build
+        run: |
+          set -o pipefail
+          xcodebuild -project Lumiere.xcodeproj \
+            -scheme Lumiere \
+            -destination "${{ steps.sim.outputs.destination }}" \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            build | xcbeautify --renderer github-actions
+
+      - name: Test
+        run: |
+          set -o pipefail
+          xcodebuild -project Lumiere.xcodeproj \
+            -scheme Lumiere \
+            -destination "${{ steps.sim.outputs.destination }}" \
+            -configuration Debug \
+            CODE_SIGNING_ALLOWED=NO \
+            test | xcbeautify --renderer github-actions

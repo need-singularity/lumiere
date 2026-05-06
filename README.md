@@ -45,6 +45,49 @@ APPLIES (camera) · AUTHORS (filter-algebra) · GENERATES (parallel-self) · DIR
 
 Lumière is the camera ⊕ studio integration.
 
+## Build
+
+Prerequisites: **macOS 15+ · Xcode 26+ · iOS 18+ deployment target**
+
+```sh
+brew install xcodegen          # one-time
+xcodegen generate              # regenerate Lumiere.xcodeproj from project.yml
+open Lumiere.xcodeproj
+```
+
+CLI build / test:
+```sh
+xcodebuild -project Lumiere.xcodeproj -scheme Lumiere \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  test
+```
+
+## Repo layout
+
+```
+lumiere/
+├── project.yml                 ← xcodegen spec (single source of truth)
+├── Sources/Lumiere/
+│   ├── LumiereApp.swift        @main · SwiftUI App
+│   ├── ContentView.swift       TabView (Camera / Studio)
+│   ├── Camera/                 AVFoundation real-time pipeline
+│   │   ├── CameraSession.swift
+│   │   ├── CameraView.swift
+│   │   └── CameraPreviewView.swift  UIViewRepresentable
+│   ├── Studio/
+│   │   └── StudioView.swift    9 cinematic effects (mk1 placeholder)
+│   └── Assets.xcassets/        AppIcon · AccentColor
+├── Tests/LumiereTests/         Swift Testing
+│   ├── CinematicEffectTests.swift
+│   └── PhysicalLimitTests.swift
+├── docs/
+│   ├── camera/camera-filter-app.md
+│   └── studio/hexa-main-character.md
+└── .github/workflows/ios.yml   GitHub Actions (build + test)
+```
+
+`Lumiere.xcodeproj` is git-ignored — regenerated from `project.yml` on every build.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

@@ -1,0 +1,85 @@
+name: Lumiere
+options:
+  bundleIdPrefix: com.need-singularity
+  deploymentTarget:
+    iOS: "18.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+  groupSortPosition: top
+  generateEmptyDirectories: false
+  xcodeVersion: "26.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    TARGETED_DEVICE_FAMILY: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    SWIFT_STRICT_CONCURRENCY: minimal
+
+targets:
+  Lumiere:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/Lumiere
+    info:
+      path: Sources/Lumiere/Generated-Info.plist
+      properties:
+        CFBundleDisplayName: Lumière
+        UILaunchScreen:
+          UIColorName: ""
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSCameraUsageDescription: >-
+          Lumière captures real-time camera frames at 16.67 ms / frame
+          to apply physical-limit-anchored filters (Airy diffraction +
+          Poisson shot noise + Wallace JPEG).
+        NSPhotoLibraryUsageDescription: >-
+          Lumière saves your edited photos and cinematic clips to the
+          Photo Library.
+        NSPhotoLibraryAddUsageDescription: >-
+          Lumière saves your edited photos and cinematic clips to the
+          Photo Library.
+        NSMicrophoneUsageDescription: >-
+          Lumière records audio during cinematic video capture for the
+          Studio mode's CLAP scene-music matching.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.need-singularity.lumiere
+        PRODUCT_NAME: Lumière
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+
+  LumiereTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/LumiereTests
+    dependencies:
+      - target: Lumiere
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.need-singularity.lumiere.tests
+        DEVELOPMENT_TEAM: ""
+        CODE_SIGN_STYLE: Automatic
+
+schemes:
+  Lumiere:
+    build:
+      targets:
+        Lumiere: all
+        LumiereTests: [test]
+    test:
+      targets:
+        - LumiereTests
+      gatherCoverageData: true
+    run:
+      config: Debug
+    archive:
+      config: Release
