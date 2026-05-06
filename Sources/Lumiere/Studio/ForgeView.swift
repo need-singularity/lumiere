@@ -1,17 +1,20 @@
 import SwiftUI
 
 /// hexa-filter-algebra surface — AUTHORS verb.
-/// mk1 placeholder. The full surface lands at filter_algebra.cond.2/3
-/// (mk2):
-///   • 9 primitive ops (color matrix / tone curve / convolution /
-///     color-space / grain / histogram / local-tone / vignette /
-///     sharpening) closed under composition algebra
-///   • 30-min auto-generation from N=5 reference image pairs
-///     (He 2015 residual + linear regression on M + 1D regression on
-///     T + FFT grain match)
-///   • plaintext Recipe export (e.g., `f = portra ∘ vignette(0.3) ∘ grain(0.2)`)
-///   • LPIPS ≤ 0.15 / SSIM ≥ 0.95 / PSNR ≥ 35 dB provable bounds
+/// mk3-C runtime scaffold landed:
+///   • 9 PrimitiveOpKernel concrete structs (`Sources/Lumiere/Studio/Forge/`)
+///   • FilterComposition with associative `apply(to:)` and `compose(_:)`
+///   • Plaintext Recipe parser (split on `∘`, optional `(arg)`)
+/// Still pending (mk4):
+///   • 30-min auto-gen from N=5 reference image pairs (filter_algebra.cond.3)
+///   • LPIPS ≤ 0.15 / SSIM ≥ 0.95 / PSNR ≥ 35 dB falsifier closure
+///   • Roofline-bounded kernel-fusion rewriter
 struct ForgeView: View {
+    /// Demo Recipe round-tripped through the runtime so the view exercises
+    /// `RecipeParser.parse` + `FilterComposition.serialize()` instead of
+    /// rendering an empty stub.
+    private let demoRecipeInput = "portra ∘ vignette(0.3) ∘ grain(0.2)"
+
     var body: some View {
         List {
             Section {
@@ -25,9 +28,32 @@ struct ForgeView: View {
                 primitiveRow(.vignette)
                 primitiveRow(.sharpening)
             } header: {
-                Text("9 primitive ops (algebra placeholder)")
+                Text("9 primitive ops (algebra runtime · mk3-C)")
             } footer: {
-                Text("filter_algebra.cond.2 — Swift FilterAlgebra runtime is mk2")
+                Text("filter_algebra.cond.2 — Swift FilterAlgebra runtime · partial closure")
+                    .font(.caption2.monospaced())
+            }
+
+            Section {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Input")
+                        .font(.caption2.monospaced())
+                        .foregroundStyle(.secondary)
+                    Text(demoRecipeInput)
+                        .font(.body.monospaced())
+                    Text("Round-tripped serialize()")
+                        .font(.caption2.monospaced())
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                    Text(roundTrippedRecipe)
+                        .font(.body.monospaced())
+                        .foregroundStyle(.tint)
+                }
+                .padding(.vertical, 4)
+            } header: {
+                Text("Recipe round-trip (live runtime demo)")
+            } footer: {
+                Text("RecipeParser.parse(input).map(\\.serialize) — exercises the algebra at mk3-C")
                     .font(.caption2.monospaced())
             }
 
@@ -43,11 +69,20 @@ struct ForgeView: View {
                     subtitle: "f = portra ∘ vignette(0.3) ∘ grain(0.2)"
                 )
             } header: {
-                Text("Inverse problem (placeholder)")
+                Text("Inverse problem (mk4)")
             } footer: {
                 Text("filter_algebra.cond.3 + vsco.cond.3 (50 inaugural Recipes feed Atelier library)")
                     .font(.caption2.monospaced())
             }
+        }
+    }
+
+    private var roundTrippedRecipe: String {
+        switch RecipeParser.parse(demoRecipeInput) {
+        case .success(let composition):
+            return composition.serialize()
+        case .failure(let error):
+            return "parse error: \(error)"
         }
     }
 
@@ -61,9 +96,8 @@ struct ForgeView: View {
                 Text(op.anchor).font(.caption2.monospaced()).foregroundStyle(.secondary)
             }
             Spacer()
-            Text("mk2").font(.caption2.monospaced()).foregroundStyle(.tertiary)
+            Text("mk3").font(.caption2.monospaced()).foregroundStyle(.tertiary)
         }
-        .opacity(0.7)
     }
 
     private func placeholderRow(icon: String, title: String, subtitle: String) -> some View {
@@ -76,56 +110,8 @@ struct ForgeView: View {
                 Text(subtitle).font(.caption2.monospaced()).foregroundStyle(.secondary)
             }
             Spacer()
-            Text("mk2").font(.caption2.monospaced()).foregroundStyle(.tertiary)
+            Text("mk4").font(.caption2.monospaced()).foregroundStyle(.tertiary)
         }
         .opacity(0.7)
-    }
-}
-
-enum FilterPrimitive: String, CaseIterable, Identifiable {
-    case colorMatrix, toneCurve, convolution, colorSpace, grain, histogram, localTone, vignette, sharpening
-
-    var id: String { rawValue }
-
-    var name: String {
-        switch self {
-        case .colorMatrix: return "Color matrix (3×3)"
-        case .toneCurve:   return "Tone curve (1D LUT)"
-        case .convolution: return "Convolution (k×k)"
-        case .colorSpace:  return "Color-space transform"
-        case .grain:       return "Grain"
-        case .histogram:   return "Histogram"
-        case .localTone:   return "Local tone"
-        case .vignette:    return "Vignette"
-        case .sharpening:  return "Sharpening"
-        }
-    }
-
-    var anchor: String {
-        switch self {
-        case .colorMatrix: return "linear · associative ✓"
-        case .toneCurve:   return "function composition · associative"
-        case .convolution: return "linear · associative ✓"
-        case .colorSpace:  return "matrix · invertible"
-        case .grain:       return "Cox 1955 · FFT match"
-        case .histogram:   return "Shannon 1948 · DPI bound"
-        case .localTone:   return "Reinhard-Devlin 2002"
-        case .vignette:    return "cos⁴θ paraxial"
-        case .sharpening:  return "unsharp mask · Wiener 1949"
-        }
-    }
-
-    var symbol: String {
-        switch self {
-        case .colorMatrix: return "square.grid.3x3"
-        case .toneCurve:   return "scribble.variable"
-        case .convolution: return "square.dashed"
-        case .colorSpace:  return "circle.hexagongrid"
-        case .grain:       return "circle.grid.cross"
-        case .histogram:   return "chart.bar"
-        case .localTone:   return "sun.haze"
-        case .vignette:    return "circle.dashed"
-        case .sharpening:  return "rays"
-        }
     }
 }
