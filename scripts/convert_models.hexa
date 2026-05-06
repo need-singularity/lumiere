@@ -9,10 +9,11 @@
 // embedded `python3 -` via exec() heredoc per hive precedent in
 // tool/auth_store_bench_live_driver.hexa.
 //
-// @tool(slug="lumiere_convert_models", desc="resnet50 / clip_image / sam → Core ML INT8 .mlpackage. resnet50 implemented; clip_image + sam stub-NotImplemented for mk3 cycle.")
-// @usage(hexa scripts/convert_models.hexa <model> --out <path>)
+// @tool(slug="lumiere_convert_models", desc="resnet50 / clip_image / sam → Core ML INT8 .mlpackage. mk3-A: all three converters implemented; clip_image traces openai/CLIP ViT-B/16 .visual, sam traces segment-anything ViT-B prompt+mask decoder (image encoder deferred to sam_image_encoder).")
+// @usage(hexa scripts/convert_models.hexa <model> --out <path> [--checkpoint <path>])
 // @example(hexa scripts/convert_models.hexa resnet50 --out Models/ResNet50_INT8.mlpackage)
-// @exit_codes(0=converted, 2=usage, 3=NotImplemented stub, 4=python3 missing, 5=conversion failed)
+// @example(hexa scripts/convert_models.hexa sam --out Models/SAM_ViT_B_INT8.mlpackage --checkpoint sam_vit_b_01ec64.pth)
+// @exit_codes(0=converted, 2=usage, 3=missing checkpoint/dependency, 4=python3 missing, 5=conversion failed)
 //
 // raw 9 hexa-only · raw 91 honest C3 (Python irreducibility disclosed).
 
@@ -32,18 +33,50 @@ fn _shell_escape(s: string) -> string {
 }
 
 fn _print_usage() -> void {
-    println("usage: hexa scripts/convert_models.hexa <model> --out <path>")
+    println("usage: hexa scripts/convert_models.hexa <model> --out <path> [--checkpoint <path>]")
     println("  model: resnet50 | clip_image | sam")
+    println("  --checkpoint: required for sam (or set SAM_CHECKPOINT env var)")
     println("  example: hexa scripts/convert_models.hexa resnet50 --out Models/ResNet50_INT8.mlpackage")
+    println("  example: hexa scripts/convert_models.hexa sam --out Models/SAM_ViT_B_INT8.mlpackage --checkpoint sam_vit_b_01ec64.pth")
 }
 
-if len(av) < 3 || av[1] != "--out" {
+// av[0]=interpreter, av[1]=script_path; user args start at av[2].
+if len(av) < 5 {
     _print_usage()
     exit(2)
 }
 
-let model = av[0]
-let out_path = av[2]
+let model = av[2]
+let mut out_path = ""
+let mut checkpoint_path = ""
+let mut i = 3
+while i < len(av) {
+    let flag = av[i]
+    if flag == "--out" {
+        if i + 1 >= len(av) {
+            _print_usage()
+            exit(2)
+        }
+        out_path = av[i + 1]
+        i = i + 2
+    } else if flag == "--checkpoint" {
+        if i + 1 >= len(av) {
+            _print_usage()
+            exit(2)
+        }
+        checkpoint_path = av[i + 1]
+        i = i + 2
+    } else {
+        println("unknown flag: " + flag)
+        _print_usage()
+        exit(2)
+    }
+}
+
+if out_path == "" {
+    _print_usage()
+    exit(2)
+}
 
 // python3 + coremltools availability check (irreducible ML dependency).
 let py_check = to_string(exec("which python3 2>/dev/null")).trim()
@@ -85,6 +118,170 @@ fn _py_resnet50() -> string {
     return p.join("\n")
 }
 
+fn _py_clip_image() -> string {
+    // openai/CLIP ViT-B/16 image encoder branch (.visual) — 512-dim
+    // identity-axis latent for Mirror (parallel_self.cond.2). CLIP's
+    // .visual returns half-precision; cast to float32 for Core ML compat.
+    // ImageType normalization: scale 1/255 then bias to apply CLIP's
+    // standard mean=(0.48145466,0.4578275,0.40821073) std=(0.26862954,
+    // 0.26130258,0.27577711). Core ML applies bias *after* scale, so:
+    //   pixel/255 = x; CLIP wants (x - mean) / std
+    //   → final = scale * pixel + bias where scale = 1/(255*std), bias = -mean/std (per channel).
+    let mut p = []
+    p.push("import sys")
+    p.push("from pathlib import Path")
+    p.push("try:")
+    p.push("    import torch")
+    p.push("    import torch.nn as nn")
+    p.push("    import coremltools as ct")
+    p.push("    from coremltools.optimize.coreml import (")
+    p.push("        OpLinearQuantizerConfig, OptimizationConfig, linear_quantize_weights,")
+    p.push("    )")
+    p.push("except ImportError as e:")
+    p.push("    print(f'ERROR: torch / coremltools not installed: {e}', file=sys.stderr)")
+    p.push("    sys.exit(3)")
+    p.push("try:")
+    p.push("    import clip")
+    p.push("except ImportError:")
+    p.push("    print('ERROR: openai/CLIP not installed.', file=sys.stderr)")
+    p.push("    print('  install: pip install git+https://github.com/openai/CLIP.git', file=sys.stderr)")
+    p.push("    sys.exit(3)")
+    p.push("out_path = Path(sys.argv[1])")
+    p.push("model, _ = clip.load('ViT-B/16', device='cpu', jit=False)")
+    p.push("model.eval()")
+    p.push("class CLIPImageWrapper(nn.Module):")
+    p.push("    def __init__(self, visual):")
+    p.push("        super().__init__()")
+    p.push("        self.visual = visual.float()")
+    p.push("    def forward(self, image):")
+    p.push("        return self.visual(image).float()")
+    p.push("wrapper = CLIPImageWrapper(model.visual).eval()")
+    p.push("example = torch.randn(1, 3, 224, 224)")
+    p.push("with torch.no_grad():")
+    p.push("    traced = torch.jit.trace(wrapper, example)")
+    p.push("mean = (0.48145466, 0.4578275, 0.40821073)")
+    p.push("std = (0.26862954, 0.26130258, 0.27577711)")
+    p.push("scale = 1.0 / (255.0 * std[0])")
+    p.push("bias = [-mean[c] / std[c] for c in range(3)]")
+    p.push("mlmodel = ct.convert(")
+    p.push("    traced,")
+    p.push("    inputs=[ct.ImageType(name='image', shape=example.shape, scale=scale, bias=bias, color_layout=ct.colorlayout.RGB)],")
+    p.push("    outputs=[ct.TensorType(name='embedding')],")
+    p.push("    compute_precision=ct.precision.FLOAT16,")
+    p.push("    minimum_deployment_target=ct.target.iOS18,")
+    p.push(")")
+    p.push("op_config = OpLinearQuantizerConfig(mode='linear_symmetric', weight_threshold=512)")
+    p.push("config = OptimizationConfig(global_config=op_config)")
+    p.push("mlmodel = linear_quantize_weights(mlmodel, config=config)")
+    p.push("out_path.parent.mkdir(parents=True, exist_ok=True)")
+    p.push("mlmodel.save(str(out_path))")
+    p.push("size_mb = sum(f.stat().st_size for f in out_path.rglob('*') if f.is_file()) / 1e6")
+    p.push("print(f'OK {out_path} ({size_mb:.1f} MB)')")
+    return p.join("\n")
+}
+
+fn _py_sam() -> string {
+    // segment-anything ViT-B — prompt encoder + mask decoder branch.
+    // The image encoder (~95 MB) is intentionally omitted: Camera runs
+    // it once per frame and reuses the (1,256,64,64) embedding across
+    // multiple prompt evaluations. A future sam_image_encoder model name
+    // covers that path.
+    //
+    // Inputs (canonical SAM ONNX-export signature, see segment-anything
+    // repo's scripts/export_onnx_model.py):
+    //   image_embedding (1,256,64,64) — output of the image encoder
+    //   point_coords    (1,N,2)       — prompt point pixel coords
+    //   point_labels    (1,N)         — 0 bg / 1 fg / 2 box-tl / 3 box-br
+    //   mask_input      (1,1,256,256) — previous-iter mask logits
+    //   has_mask_input  (1,)          — 0 ignore / 1 use mask_input
+    //   orig_im_size    (2,)          — (H,W) for upscaling masks
+    // Outputs: low_res_masks (1,4,256,256) + iou_predictions (1,4)
+    let mut p = []
+    p.push("import os, sys")
+    p.push("from pathlib import Path")
+    p.push("try:")
+    p.push("    import numpy as np")
+    p.push("    import torch")
+    p.push("    import torch.nn as nn")
+    p.push("    import coremltools as ct")
+    p.push("    from coremltools.optimize.coreml import (")
+    p.push("        OpLinearQuantizerConfig, OptimizationConfig, linear_quantize_weights,")
+    p.push("    )")
+    p.push("except ImportError as e:")
+    p.push("    print(f'ERROR: torch / coremltools / numpy not installed: {e}', file=sys.stderr)")
+    p.push("    sys.exit(3)")
+    p.push("try:")
+    p.push("    from segment_anything import sam_model_registry")
+    p.push("    from segment_anything.utils.onnx import SamOnnxModel")
+    p.push("except ImportError:")
+    p.push("    print('ERROR: segment-anything not installed.', file=sys.stderr)")
+    p.push("    print('  install: pip install git+https://github.com/facebookresearch/segment-anything.git', file=sys.stderr)")
+    p.push("    sys.exit(3)")
+    p.push("out_path = Path(sys.argv[1])")
+    p.push("ckpt = sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] else os.environ.get('SAM_CHECKPOINT', '')")
+    p.push("if not ckpt:")
+    p.push("    print('ERROR: SAM checkpoint required.', file=sys.stderr)")
+    p.push("    print('  pass --checkpoint <path> or set SAM_CHECKPOINT env var.', file=sys.stderr)")
+    p.push("    print('  download: https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth', file=sys.stderr)")
+    p.push("    sys.exit(3)")
+    p.push("if not Path(ckpt).is_file():")
+    p.push("    print(f'ERROR: SAM checkpoint not found: {ckpt}', file=sys.stderr)")
+    p.push("    sys.exit(3)")
+    p.push("sam = sam_model_registry['vit_b'](checkpoint=ckpt)")
+    p.push("sam.eval()")
+    p.push("# SamOnnxModel wraps prompt-encoder + mask-decoder into a single")
+    p.push("# forward(image_embeddings, point_coords, point_labels, mask_input,")
+    p.push("# has_mask_input, orig_im_size) -> (masks, iou, low_res_masks).")
+    p.push("# We use return_single_mask=False to expose all 4 mask candidates.")
+    p.push("onnx_wrapper = SamOnnxModel(model=sam, return_single_mask=False)")
+    p.push("onnx_wrapper.eval()")
+    p.push("embed_dim = sam.prompt_encoder.embed_dim")
+    p.push("embed_size = sam.prompt_encoder.image_embedding_size")
+    p.push("mask_input_size = [4 * x for x in embed_size]")
+    p.push("dummy_inputs = {")
+    p.push("    'image_embeddings': torch.randn(1, embed_dim, *embed_size, dtype=torch.float),")
+    p.push("    'point_coords': torch.randint(low=0, high=1024, size=(1, 5, 2), dtype=torch.float),")
+    p.push("    'point_labels': torch.randint(low=0, high=4, size=(1, 5), dtype=torch.float),")
+    p.push("    'mask_input': torch.randn(1, 1, *mask_input_size, dtype=torch.float),")
+    p.push("    'has_mask_input': torch.tensor([1], dtype=torch.float),")
+    p.push("    'orig_im_size': torch.tensor([1500, 2250], dtype=torch.float),")
+    p.push("}")
+    p.push("with torch.no_grad():")
+    p.push("    traced = torch.jit.trace(")
+    p.push("        onnx_wrapper,")
+    p.push("        example_inputs=tuple(dummy_inputs.values()),")
+    p.push("        strict=False,")
+    p.push("    )")
+    p.push("ct_inputs = [")
+    p.push("    ct.TensorType(name='image_embeddings', shape=dummy_inputs['image_embeddings'].shape),")
+    p.push("    ct.TensorType(name='point_coords', shape=ct.Shape(shape=(1, ct.RangeDim(1, 16), 2))),")
+    p.push("    ct.TensorType(name='point_labels', shape=ct.Shape(shape=(1, ct.RangeDim(1, 16)))),")
+    p.push("    ct.TensorType(name='mask_input', shape=dummy_inputs['mask_input'].shape),")
+    p.push("    ct.TensorType(name='has_mask_input', shape=dummy_inputs['has_mask_input'].shape),")
+    p.push("    ct.TensorType(name='orig_im_size', shape=dummy_inputs['orig_im_size'].shape),")
+    p.push("]")
+    p.push("ct_outputs = [")
+    p.push("    ct.TensorType(name='masks'),")
+    p.push("    ct.TensorType(name='iou_predictions'),")
+    p.push("    ct.TensorType(name='low_res_masks'),")
+    p.push("]")
+    p.push("mlmodel = ct.convert(")
+    p.push("    traced,")
+    p.push("    inputs=ct_inputs,")
+    p.push("    outputs=ct_outputs,")
+    p.push("    compute_precision=ct.precision.FLOAT16,")
+    p.push("    minimum_deployment_target=ct.target.iOS18,")
+    p.push(")")
+    p.push("op_config = OpLinearQuantizerConfig(mode='linear_symmetric', weight_threshold=512)")
+    p.push("config = OptimizationConfig(global_config=op_config)")
+    p.push("mlmodel = linear_quantize_weights(mlmodel, config=config)")
+    p.push("out_path.parent.mkdir(parents=True, exist_ok=True)")
+    p.push("mlmodel.save(str(out_path))")
+    p.push("size_mb = sum(f.stat().st_size for f in out_path.rglob('*') if f.is_file()) / 1e6")
+    p.push("print(f'OK {out_path} ({size_mb:.1f} MB)')")
+    return p.join("\n")
+}
+
 fn _run_python(py: string, out: string) -> int {
     // Single-quoted heredoc: no $ expansion, $ literals safe.
     // Append a trailing __STATUS__=$? marker so the .hexa frame can read
@@ -98,24 +295,29 @@ fn _run_python(py: string, out: string) -> int {
     return status
 }
 
+fn _run_python_with_checkpoint(py: string, out: string, ckpt: string) -> int {
+    // Same as _run_python but threads a third positional argv (the SAM
+    // checkpoint path) into the Python heredoc as sys.argv[2].
+    let cmd = "python3 - " + _shell_escape(out) + " " + _shell_escape(ckpt) + " <<'PYEOF'\n" + py + "\nPYEOF\nstatus=$?\necho \"__STATUS__=$status\""
+    let raw = to_string(exec(cmd))
+    println(raw)
+
+    let parse = "printf '%s' " + _shell_escape(raw) + " | grep -o '__STATUS__=[0-9]\\+' | tail -1 | sed 's/__STATUS__=//'"
+    let status = to_int(to_string(exec(parse)).trim())
+    return status
+}
+
 if model == "resnet50" {
     let status = _run_python(_py_resnet50(), out_path)
     if status == 0 { exit(0) } else { exit(5) }
 } else if model == "clip_image" {
-    println("clip_image: NotImplemented (mk3)")
-    println("  install:  pip install git+https://github.com/openai/CLIP.git")
-    println("  load ViT-B/16, trace .visual module on (1,3,224,224),")
-    println("  ct.convert with ImageType + 512-dim FloatType output, INT8 quantize.")
-    println("  Mirror (hexa-parallel-self) consumes the 512-dim CLIP-Image latent.")
-    println("  parallel_self.cond.2 dependency.")
-    exit(3)
+    let status = _run_python(_py_clip_image(), out_path)
+    if status == 0 { exit(0) } else if status == 3 { exit(3) } else { exit(5) }
 } else if model == "sam" {
-    println("sam: NotImplemented (mk3)")
-    println("  install:  pip install git+https://github.com/facebookresearch/segment-anything.git")
-    println("  load sam_vit_b_01ec64.pth, trace mask predictor (point+box → mask),")
-    println("  ct.convert multi-input + mask output, INT8 quantize.")
-    println("  Camera uses SAM masks for content-aware spatial filter scoping.")
-    exit(3)
+    // checkpoint may be empty here — Python side falls back to
+    // SAM_CHECKPOINT env var, then errors with exit 3 if neither.
+    let status = _run_python_with_checkpoint(_py_sam(), out_path, checkpoint_path)
+    if status == 0 { exit(0) } else if status == 3 { exit(3) } else { exit(5) }
 } else {
     println("unknown model: " + model)
     _print_usage()

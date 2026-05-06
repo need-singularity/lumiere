@@ -19,12 +19,26 @@ pip install coremltools torch torchvision
 pip install git+https://github.com/openai/CLIP.git
 pip install git+https://github.com/facebookresearch/segment-anything.git
 
+# Download the SAM ViT-B checkpoint once (Apache 2.0):
+curl -LO https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
+
 hexa scripts/convert_models.hexa resnet50   --out Models/ResNet50_INT8.mlpackage
 hexa scripts/convert_models.hexa clip_image --out Models/CLIP_Image_INT8.mlpackage
-hexa scripts/convert_models.hexa sam        --out Models/SAM_ViT_B_INT8.mlpackage
+hexa scripts/convert_models.hexa sam        --out Models/SAM_ViT_B_INT8.mlpackage \
+    --checkpoint sam_vit_b_01ec64.pth
+# (or set SAM_CHECKPOINT=path/to/sam_vit_b_01ec64.pth in the env instead of --checkpoint)
 ```
 
-CLIP and SAM conversion paths are stub-NotImplemented in `scripts/convert_models.hexa` until their source-loading wrappers land — track via `camera.cond.2` and `parallel_self.cond.2` in `.roadmap.camera` / `.roadmap.parallel_self`.
+mk3-A: all three converters are implemented. The `sam` branch ships the
+prompt-encoder + mask-decoder only; the SAM image encoder (~95 MB on
+its own) is deferred to a future `sam_image_encoder` model name —
+Camera runs the image encoder once per frame and reuses the
+`(1,256,64,64)` embedding across multiple prompt evaluations.
+
+`.mlpackage` files are not yet bundled into the app — track final
+closure (file build + iPhone 15 Pro p95 ≤ 25 ms measurement) via
+`camera.cond.2` in `.roadmap.camera` and `parallel_self.cond.2` in
+`.roadmap.parallel_self`.
 
 ## Loading from Swift
 
