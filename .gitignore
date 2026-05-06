@@ -1,0 +1,87 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Xcode / iOS
+build/
+DerivedData/
+*.xcuserdata/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+Pods/
+Carthage/Build/
+.swiftpm/
+.build/
+Package.resolved
+
+# Swift Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Node / React Native
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp.*
+dist/
+.next/
+.expo/
+.expo-shared/
+
+# Python (ML scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ML / training artifacts
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.coreml
+*.mlmodel
+*.mlmodelc
+*.tflite
+weights/
+checkpoints/
+runs/
+wandb/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS / shell
+.envrc
+
+# Logs
+*.log
+logs/
+
+# Coverage / test
+coverage/
+.nyc_output/
+htmlcov/
+.coverage
