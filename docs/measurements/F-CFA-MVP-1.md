@@ -8,7 +8,7 @@
 | **Hardware** | iPhone 15 Pro |
 | **Deadline** | 2026-08-30 |
 | **Current status** | `not-yet-measured` |
-| **GitHub issue** | [#1](https://github.com/need-singularity/lumiere/issues/1) |
+| **GitHub issue** | [#1](https://github.com/dancinlab/lumiere/issues/1) |
 
 ## Pre-declared expected outcome
 

@@ -8,7 +8,7 @@
 | **Hardware** | offline + iPhone 15 Pro inference (CLIP-B/16 + 6-class SVM) |
 | **Deadline** | 2026-08-30 |
 | **Current status** | `not-yet-measured` |
-| **GitHub issue** | [#8](https://github.com/need-singularity/lumiere/issues/8) |
+| **GitHub issue** | [#8](https://github.com/dancinlab/lumiere/issues/8) |
 
 ## Pre-declared expected outcome
 

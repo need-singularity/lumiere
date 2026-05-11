@@ -22,7 +22,7 @@ default_platform(:ios)
 
 PROJECT = "Lumiere.xcodeproj"
 SCHEME  = "Lumiere"
-APP_ID  = "com.need-singularity.lumiere"
+APP_ID  = "com.dancinlab.lumiere"
 
 platform :ios do
   before_all do

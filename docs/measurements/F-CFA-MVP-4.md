@@ -8,7 +8,7 @@
 | **Hardware** | iPhone 15 Pro · N=30 user MOS panel |
 | **Deadline** | 2026-09-30 |
 | **Current status** | `not-yet-measured` |
-| **GitHub issue** | [#4](https://github.com/need-singularity/lumiere/issues/4) |
+| **GitHub issue** | [#4](https://github.com/dancinlab/lumiere/issues/4) |
 
 ## Pre-declared expected outcome
 

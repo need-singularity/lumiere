@@ -1,6 +1,6 @@
 name: Lumiere
 options:
-  bundleIdPrefix: com.need-singularity
+  bundleIdPrefix: com.dancinlab
   deploymentTarget:
     iOS: "18.0"
   developmentLanguage: en
@@ -49,7 +49,7 @@ targets:
           Studio mode's CLAP scene-music matching.
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.need-singularity.lumiere
+        PRODUCT_BUNDLE_IDENTIFIER: com.dancinlab.lumiere
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: ""
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
@@ -64,7 +64,7 @@ targets:
       - target: Lumiere
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.need-singularity.lumiere.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.dancinlab.lumiere.tests
         DEVELOPMENT_TEAM: ""
         CODE_SIGN_STYLE: Automatic
 

@@ -4,7 +4,7 @@
 
 > 빛으로 찍고, 빛으로 연출하다 — *Capture in light, direct in light*
 
-**Lumière** is a physical-limit iOS app that absorbs the entire `apps` axis of [n6-architecture](https://github.com/dancinlab/n6-architecture) — 5 verb-distinct surfaces unified under the 16.67 ms real-time budget (60 fps Nyquist) and the Airy diffraction limit.
+**Lumière** is a physical-limit iOS app that absorbs the entire `apps` axis of [CANON](https://github.com/dancinlab/canon) — 5 verb-distinct surfaces unified under the 16.67 ms real-time budget (60 fps Nyquist) and the Airy diffraction limit.
 
 ---
 
@@ -81,7 +81,7 @@ All five are own#15 21-section research-paper-format spec docs (own#33 ai-native
 
 ## Lineage
 
-Lumière absorbs the entire [n6-architecture](https://github.com/dancinlab/n6-architecture) **apps axis** — the 13th axis registered 2026-05-01 — where the 5 verb-distinct sibling domains were factored as separate research papers but share one consumer iOS surface.
+Lumière absorbs the entire [CANON](https://github.com/dancinlab/canon) **apps axis** — the 13th axis registered 2026-05-01 — where the 5 verb-distinct sibling domains were factored as separate research papers but share one consumer iOS surface.
 
 ## Build
 

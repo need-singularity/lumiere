@@ -8,7 +8,7 @@
 | **Hardware** | iPhone 15 Pro · MetricKit |
 | **Deadline** | 2026-09-30 |
 | **Current status** | `not-yet-measured` |
-| **GitHub issue** | [#5](https://github.com/need-singularity/lumiere/issues/5) |
+| **GitHub issue** | [#5](https://github.com/dancinlab/lumiere/issues/5) |
 
 ## Pre-declared expected outcome
 

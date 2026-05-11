@@ -39,5 +39,5 @@ Pre-declared deadlines (spec §19.2):
 ## Cross-references
 
 - Spec source: [`docs/camera/camera-filter-app.md` §19.2](../camera/camera-filter-app.md) · [`docs/studio/hexa-main-character.md` §19.2](../studio/hexa-main-character.md)
-- GitHub issues: [#1–5 (camera)](https://github.com/need-singularity/lumiere/issues?q=label%3Acamera) · [#6–10 (studio)](https://github.com/need-singularity/lumiere/issues?q=label%3Astudio)
-- Milestones: [F-MVP 2026-08-30](https://github.com/need-singularity/lumiere/milestones) · [F-MVP 2026-09-30](https://github.com/need-singularity/lumiere/milestones)
+- GitHub issues: [#1–5 (camera)](https://github.com/dancinlab/lumiere/issues?q=label%3Acamera) · [#6–10 (studio)](https://github.com/dancinlab/lumiere/issues?q=label%3Astudio)
+- Milestones: [F-MVP 2026-08-30](https://github.com/dancinlab/lumiere/milestones) · [F-MVP 2026-09-30](https://github.com/dancinlab/lumiere/milestones)

@@ -8,7 +8,7 @@
 | **Hardware** | iPhone 15 Pro · 12 MP capture |
 | **Deadline** | 2026-08-30 |
 | **Current status** | `not-yet-measured` |
-| **GitHub issue** | [#3](https://github.com/need-singularity/lumiere/issues/3) |
+| **GitHub issue** | [#3](https://github.com/dancinlab/lumiere/issues/3) |
 
 ## Pre-declared expected outcome
 

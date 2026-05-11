@@ -24,7 +24,7 @@ final class CameraSession: ObservableObject {
         }
     )
     private let frameQueue = DispatchQueue(
-        label: "com.need-singularity.lumiere.frames",
+        label: "com.dancinlab.lumiere.frames",
         qos: .userInitiated
     )
 

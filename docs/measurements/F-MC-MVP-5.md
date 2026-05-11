@@ -8,7 +8,7 @@
 | **Hardware** | offline render of 100 synthetic 6-blade scenes |
 | **Deadline** | 2026-09-30 |
 | **Current status** | `not-yet-measured` (analytical model: 0° divergence) |
-| **GitHub issue** | [#10](https://github.com/need-singularity/lumiere/issues/10) |
+| **GitHub issue** | [#10](https://github.com/dancinlab/lumiere/issues/10) |
 
 ## Pre-declared expected outcome
 

@@ -8,7 +8,7 @@
 | **Hardware** | N=30 user blind A/B panel |
 | **Deadline** | 2026-08-30 |
 | **Current status** | `not-yet-measured` |
-| **GitHub issue** | [#7](https://github.com/need-singularity/lumiere/issues/7) |
+| **GitHub issue** | [#7](https://github.com/dancinlab/lumiere/issues/7) |
 
 ## Pre-declared expected outcome
 

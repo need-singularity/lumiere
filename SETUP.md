@@ -20,7 +20,7 @@ Roadmap reference: [`.roadmap.release`](.roadmap.release) blockers `release.blk.
   - Platform: **iOS**
   - Name: **Lumière**
   - Primary language: English (U.S.)
-  - Bundle ID: register `com.need-singularity.lumiere` first under Certificates, Identifiers & Profiles → Identifiers, then select it here.
+  - Bundle ID: register `com.dancinlab.lumiere` first under Certificates, Identifiers & Profiles → Identifiers, then select it here.
   - SKU: `lumiere-mk1`
   - User Access: Full Access
 
@@ -45,7 +45,7 @@ base64 -i AuthKey_XXXXXXXXXX.p8 | pbcopy
 
 `match` keeps signing certificates and provisioning profiles in a private Git repo, encrypted with a passphrase. CI fetches read-only.
 
-- Create a private repo for cert storage, e.g. `need-singularity/lumiere-match` (do NOT make this public).
+- Create a private repo for cert storage, e.g. `dancinlab/lumiere-match` (do NOT make this public).
 - Generate a long random passphrase: `openssl rand -base64 32`.
 - One-time on a maintainer's Mac (NOT in CI):
 
@@ -63,13 +63,13 @@ base64 -i AuthKey_XXXXXXXXXX.p8 | pbcopy
   ```
 
 → Save as repo secrets:
-- `MATCH_GIT_URL` — `https://github.com/need-singularity/lumiere-match.git`
+- `MATCH_GIT_URL` — `https://github.com/dancinlab/lumiere-match.git`
 - `MATCH_PASSWORD` — the passphrase from `openssl rand`
 - `MATCH_GIT_BASIC_AUTHORIZATION` — the base64 `user:pat` blob
 
 ## 5. Repo secrets summary
 
-After steps 1–4, GitHub repo `need-singularity/lumiere` → **Settings → Secrets and variables → Actions** must contain all six:
+After steps 1–4, GitHub repo `dancinlab/lumiere` → **Settings → Secrets and variables → Actions** must contain all six:
 
 | Secret | Source |
 |---|---|

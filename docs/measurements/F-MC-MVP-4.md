@@ -8,7 +8,7 @@
 | **Hardware** | N=20 panel · CLAP scene-music matching |
 | **Deadline** | 2026-09-30 |
 | **Current status** | `not-yet-measured` |
-| **GitHub issue** | [#9](https://github.com/need-singularity/lumiere/issues/9) |
+| **GitHub issue** | [#9](https://github.com/dancinlab/lumiere/issues/9) |
 
 ## Pre-declared expected outcome
 
