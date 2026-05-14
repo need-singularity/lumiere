@@ -1,6 +1,23 @@
-# Lumière ✨
+<p align="center">
+  <img src="docs/logo.svg" width="140" alt="Lumière">
+</p>
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20102960.svg)](https://doi.org/10.5281/zenodo.20102960)
+<h1 align="center">💡 Lumière</h1>
+
+<p align="center"><strong>Capture in Light, Direct in Light</strong> — physical-limit iOS app · 5 surfaces · 16.67 ms · Airy-bounded</p>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href="https://doi.org/10.5281/zenodo.20102960"><img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.20102960.svg"></a>
+  <img alt="Cycle" src="https://img.shields.io/badge/cycle-mk4-success">
+  <img alt="Surfaces" src="https://img.shields.io/badge/surfaces-5-informational">
+  <img alt="F-gates" src="https://img.shields.io/badge/f--gates-25-informational">
+  <img alt="Parent" src="https://img.shields.io/badge/parent-dancinlab-blueviolet">
+</p>
+
+<p align="center">iOS · SwiftUI · AVFoundation · CANON-apps-axis · 60 fps · Airy · Roofline · own1</p>
+
+---
 
 > 빛으로 찍고, 빛으로 연출하다 — *Capture in light, direct in light*
 
@@ -91,13 +108,12 @@ Build `mk5` continues on lifting these blockers as devices/credentials/weights l
 - [docs/parallel_self/hexa-parallel-self.md](docs/parallel_self/hexa-parallel-self.md) — 🪞 Mirror (GENERATES)
 - [docs/vsco/hexa-vsco.md](docs/vsco/hexa-vsco.md) — 🎨 Atelier (EDITS · LIBRARY · DISCOVER)
 
-All five are own#15 21-section research-paper-format spec docs (own#33 ai-native-verify-pattern Block A-G).
 
 ## Lineage
 
 Lumière absorbs the entire [CANON](https://github.com/dancinlab/canon) **apps axis** — the 13th axis registered 2026-05-01 — where the 5 verb-distinct sibling domains were factored as separate research papers but share one consumer iOS surface.
 
-## Build
+## Run
 
 Prerequisites: **macOS 15+ · Xcode 26+ · iOS 18+ deployment target**
 

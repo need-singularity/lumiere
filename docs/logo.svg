@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" role="img" aria-label="Lumiere logo">
+  <polygon points="70,8 130,42 130,98 70,132 10,98 10,42"
+           fill="none" stroke="#bf8700" stroke-width="6"
+           stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="70" cy="68" r="14" fill="#bf8700"/>
+  <g stroke="#bf8700" stroke-width="4" stroke-linecap="round">
+    <line x1="70" y1="32" x2="70" y2="44"/>
+    <line x1="70" y1="92" x2="70" y2="104"/>
+    <line x1="34" y1="68" x2="46" y2="68"/>
+    <line x1="94" y1="68" x2="106" y2="68"/>
+    <line x1="44" y1="42" x2="52" y2="50"/>
+    <line x1="88" y1="86" x2="96" y2="94"/>
+    <line x1="44" y1="94" x2="52" y2="86"/>
+    <line x1="88" y1="50" x2="96" y2="42"/>
+  </g>
+  <text x="70" y="126" text-anchor="middle"
+        font-family="ui-serif,Georgia,'Times New Roman',serif"
+        font-size="14" font-weight="700" fill="#bf8700"
+        font-style="italic" letter-spacing="1">Lumière</text>
+</svg>
