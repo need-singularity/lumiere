@@ -66,7 +66,6 @@ blockers (Apple Developer enrollment, device delivery, weight conversion).
 2. **L2 + L3 — Multi-frame super-resolution to extend the Airy / shot-noise frontier.** Burst-stack with optical-flow alignment gains roughly √N in shot-noise SNR and can recover sub-pixel detail beyond single-frame Airy. Apple already does this in ProRAW; lumière's Camera mk2+ can match-or-beat. Trigger: low-light SNR +1 stop at burst-16; measurable detail beyond single-frame Airy.
 3. **L5 — Energy profile per effect.** The 50 mJ/frame ceiling is asserted but not yet measured (F-gate pending). Per-effect energy instrumentation lets users (or auto-mode) drop expensive effects in Low Power Mode. Trigger: measured 50 mJ/frame budget held with full effect stack on iPhone 15 Pro.
 
-## §5 Honest caveats (raw#10 C3)
 
 - Lumière is the *only* repo in this batch where the README already names its physical limits explicitly — most of this audit is confirming the project's own framing. That is a good sign, not a deficiency.
 - HARD walls L1, L2, L3 are real physical limits — Nyquist, Airy, Poisson. The project sits at them by design. No "breakthrough" along these axes is possible; the breakthroughs are *engineering* ones inside the boundary (multi-frame, quantization, codec choice).

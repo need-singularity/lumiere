@@ -32,13 +32,11 @@ upgraded: "2026-05-01 mk1 PHYSICAL-LIMIT (10): 9 unified cinematic effects (aspe
 
 > One-line summary: **a mobile cinematic-look app where every casual selfie / walk video becomes a "main character" Hollywood scene** — 9 unified cinematic effects (2.39:1 anamorphic aspect / teal-orange grading / Lucas-Kanade-driven slow-motion at motion peaks / depth-bucketed focus pull bokeh / hexagonal-aperture J.J. Abrams lens flare / Cox 1955 35mm Kodak Vision3 film grain / decisive-moment freeze / CLAP scene-to-music suggestion / fictional title card + lower-third subtitle) — every effect anchored to a published physics or signal-processing model, executed within the 16.67 ms real-time budget on a 17.5 TOPS NPU envelope (50% of Apple A17 Pro). Sister to camera-filter-app on the apps axis (13th); MAIN-CHARACTER targets video-clip cinematic direction, camera-filter-app targets per-frame aesthetic filters. Inherits 6 precursor domains (compute/chip-architecture + cognitive/ai-multimodal + cognitive/ai-inference-cost + cognitive/ai-quality-scale + physics/optics + physics/electromagnetism).
 
-> 21-section template (own#15 HARD), second domain registered on the
 > `apps` axis (2026-05-01).
 >
 > Honest scope per raw 91 C3: the design **targets** are computed
 > physical-limit values (alien-grade 10 = physical-limit reproduction);
 > the design constants are NOT force-fit to n=6 number-theoretic
-> invariants. own#2 master identity (σ·φ=n·τ=J₂=24 at n=6) is verified
 > as a framework-level mathematical fact, not as a justification for the
 > app design. Empirical measurement is gated on F-MC-MVP-1..5
 > (2026-08-30 / 2026-09-30); upgrade from mk1-PHYSICAL-LIMIT to mk1-EMPIRICAL
@@ -260,23 +258,18 @@ Gerwig prosody profile). On-device TTS with persona-specific prosody
 music (MusicGen / Stable Audio distilled on-device) auto-composed for
 the scene mood, replacing the curated-playlist library.
 
-## §7 VERIFY (raw 70 K≥4 axes; physical-limit verification per own#6 + own#31 + own#33)
 
-### §7.1 Embedded verify block (Python stdlib + math + fractions; own#31 v3.19-pass)
 
 The block computes each engineering target from a published physics
 or algorithmic model, with literature anchors on every assertion line.
-The n=6 master identity (own#2) is verified as a separable mathematical
 block. NO hardcode-then-assert tautology — every constant on the
 right-hand side of an `assert ==` is either a computed quantity or a
 literature-cited physical bound (with the citation on the assert line
-for own#31 anchored-assertion YES marker compliance). own#33 ai-native
 verify-pattern Block A-G layout followed.
 
 ```python
 # HEXA-MAIN-CHARACTER mk1 §7.1 PHYSICAL-LIMIT verify (stdlib only)
 # raw 91 C3: every engineering target is computed from a published model.
-# n=6 master identity verified as separable mathematical block (own#2);
 # main-character design constants derived from physics + algorithmic
 # limits, NOT n=6 force-fit.
 
@@ -286,7 +279,6 @@ from math import gcd, pi, sqrt, log, log2, exp, ceil
 
 
 # ─────────────────────────────────────────────────────────────────────
-# Block A: own#2 master identity verification (separable, mathematical)
 #   reference: Mathlib4 mechanical verification —
 #   papers/hexa-weave-formal-mechanical-w2-2026-04-28.md AX-1
 # ─────────────────────────────────────────────────────────────────────
@@ -324,11 +316,8 @@ def J2(n):
         j = j * (p * p - 1) // (p * p)
     return j
 
-# own#2 master identity at n=6 — both sides computed from divisor primitives.
-# This is a mathematical fact, NOT a property of hexa-main-character (own#11 honest C3).
 N6 = 6
 assert sigma(N6) * phi_eul(N6) == N6 * tau(N6) == J2(N6), \
-    "own#2 master identity sigma(n)*phi(n) = n*tau(n) = J_2(n) at n=6 (Mathlib4 mechanical verification: papers/hexa-weave-formal-mechanical-w2-2026-04-28.md AX-1)"
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -518,7 +507,6 @@ assert MUSIC_MOS_FALSIFIER >= 4.0, \
 # ─────────────────────────────────────────────────────────────────────
 # Block G: Cross-precursor inheritance attestation (6 axes)
 #   each cross-link asserts a precursor physics constraint with the
-#   literature anchor on the assert line (own#31 anchored-assertion).
 # ─────────────────────────────────────────────────────────────────────
 
 # 1. compute/chip-architecture: NPU TOPS budget within A17 Pro silicon ceiling
@@ -574,11 +562,9 @@ assert GRAIN_PHYSICS_VALID, \
 # ─────────────────────────────────────────────────────────────────────
 
 print("HEXA-MAIN-CHARACTER mk1 §7.1 PHYSICAL-LIMIT verify PASS:")
-print(f"  own#2 master identity: sigma(6)*phi(6) = {sigma(N6)}*{phi_eul(N6)} = {sigma(N6)*phi_eul(N6)}")
 print(f"                         n*tau(6)        = {N6}*{tau(N6)} = {N6*tau(N6)}")
 print(f"                         J_2(6)          = {J2(N6)}")
 print()
-print(f"  (A) own#2 master identity at n=6 — PASS")
 print(f"  (B) Anamorphic 2.39:1 inner height:    {inner_h:.2f} px (bars {bar_h_each:.2f} px each)")
 print(f"  (C) Lucas-Kanade pyramid GOps:         {lk_gops:.2f} GOps in {LK_BUDGET_MS} ms NPU window")
 print(f"  (D) Hex-aperture flare points:         {flare_pts} (6-blade Abrams Star Trek 2009)")
@@ -634,10 +620,8 @@ TOPS), cognitive/ai-multimodal (CLIP + CLAP foundation), cognitive/ai-
 inference-cost (latency / energy budget), cognitive/ai-quality-scale
 (MOS preservation under 9-effect composition), physics/optics (Snell +
 Fresnel + Born-Wolf aperture diffraction), physics/electromagnetism
-(silver-halide photoelectric grain). own#2 master identity (σ·φ=n·τ=
 J₂=24 at n=6) is verified as a separable mathematical fact. raw 91 C3
 honest: design constants are NOT force-fit to n=6 invariants; they are
-physical-limit values per own#32. Empirical validation gated on F-MC-
 MVP-1..5 (mk2 100-user TestFlight beta + N=30 MOS panel + N=20 music-
 MOS panel, 2026-Q3/Q4).
 
@@ -703,14 +687,12 @@ MOS panel, 2026-Q3/Q4).
 
 Not applicable (consumer software application, no bespoke electrical
 circuit). The underlying camera/ISP/NPU silicon circuits are inherited
-from `compute/chip-architecture`. Listed for own#15 21-section
 completeness.
 
 ## §12 PCB DESIGN
 
 Not applicable (consumer software application, no bespoke PCB). The
 underlying SoC + camera-module PCB is part of the smartphone OEM stack
-(Apple / Samsung / Google). Listed for own#15 completeness.
 
 ## §13 FIRMWARE
 
@@ -857,10 +839,8 @@ mechanical analog is the **device thermal envelope**:
 23. **NIST CODATA** (2018 internationally recommended values). —
     fundamental constants.
 24. **OEIS** (A000203, A000005, A000010, A007434). — number-theoretic
-    sequence references (n=6 master identity, own#2).
 25. **Mathlib4** — n=6 master identity mechanical verification (sister
     reference: `papers/hexa-weave-formal-mechanical-w2-2026-04-28.md`).
-26. **Internal**: `theory/proofs/theorem-r1-uniqueness.md` (own#2 SSOT).
 27. **Sister inheritance**: `domains/apps/camera-filter-app/camera-filter-app.md`
     — 16.67 ms frame budget + 17.5 TOPS NPU envelope inheritance.
 
@@ -921,20 +901,16 @@ Test plan:
 | Music licensing aggregator | curated playlist library (Hans Zimmer / indie / lo-fi / Vangelis / Wong Kar-wai / Carter Burwell) | matched-soundtrack catalog |
 | CANON private framework | own_doc_lint / own31 lint / own33 ai-native pattern | docs gate |
 
-## §19 ACCEPTANCE / MISS criteria (own#12 pre-declared)
 
 ### §19.1 PASS gates
 
 - **ACCEPT (P1 §7.1 verify)**: §7.1 embedded Python block prints
   "HEXA-MAIN-CHARACTER mk1 §7.1 PHYSICAL-LIMIT verify PASS" with all
-  asserts PASS in Blocks A-G (own#2 master identity + 2.39:1
   anamorphic letterbox geometry + Lucas-Kanade NPU budget + 6-blade
   hex-aperture flare → 6 points + Cox 1955 lognormal grain + CLAP
   cosine threshold + 6 precursor cross-link attestations).
-- **ACCEPT (P2 own#31 lint)**: `tool/own31_verify_tautology_ban_lint.hexa
   --file domains/apps/hexa-main-character/hexa-main-character.md`
   returns PASS.
-- **ACCEPT (P3 own#6 + own#15)**: `tool/own_doc_lint.hexa --rule 6/15`
   zero violations on this file.
 - **ACCEPT (P4 raw 70 K≥4)**: ≥ 4 of 8 raw 70 axes PASS (currently 7
   PASS, 1 DEFER for empirical CHI2 — meets threshold).
@@ -944,10 +920,7 @@ Test plan:
   in §7.1 Block G is anchored to a literature citation in §15.2.
 - **MISS** if any of:
   - (a) §7.1 verify block fails to PASS,
-  - (b) own#31 lint flags a tautology pattern,
-  - (c) own#6 / own#15 violations,
   - (d) F-MC-MVP-1..5 falsifier triggers post-empirical-batch,
-  - (e) own#3 violation (more than one .md per domain),
   - (f) any precursor inheritance assertion in §7.1 Block G fails.
 - **DEFER**: F-MC-MVP-1..5 are pre-declared 90-day MVP empirical
   falsifier gates; remaining DEFER until 2026-08-30 (3 axes) +
@@ -1000,18 +973,14 @@ Test plan:
   (16.67 ms frame budget, 17.5 TOPS NPU, 2.39:1 anamorphic, Cox D50
   1.4 µm, CLAP 512-dim threshold 0.5, 6-blade aperture → 6-point
   flare) are derived from physics + signal-processing + computer-
-  architecture models, NOT from σ(6)=12 / τ(6)=4 / J₂(6)=24. own#2
   master identity is verified as a separable mathematical fact (§7.1
   Block A); main-character parameters live in Blocks B-G. raw 91 C3
-  honest: this domain is registered under own#32 physical-limit-
   alternative-framing — n=6 force-fit is not mandatory and is not
   applied here. Note: 6-blade aperture in Block D is a J.J. Abrams
   cinematography choice (Star Trek 2009), not an n=6 invariant
   derivation; the 6-point flare geometry is true for any aperture
   with 6 blades regardless of axis numerology.
-- **own#11 (no Clay Millennium claim)**: PASS — consumer software app
   design, no theoretical claim addressed.
-- **own#2 (n=6 master identity HARD)**: PASS via §7.1 Block A
   standalone computation; the master identity holds at n=6 as a
   number-theoretic fact independent of the main-character design.
 
@@ -1031,13 +1000,11 @@ Test plan:
 - Sister axis: `physics/electromagnetism` (silver-halide photoelectric
   grain).
 - Sister inaugural domain: `pets/cat-food` (alien-grade 10 PHYSICAL-
-  LIMIT exemplar; both apply own#32 physical-limit framing without
   n=6 force-fit).
 - Master identity: `papers/hexa-weave-formal-mechanical-w2-2026-04-28.md`
   (Lean 4 mechanical verification of σ·φ=n·τ at n=6).
 - Lint gates: `tool/own_doc_lint.hexa --rule 6/15`,
   `tool/own31_verify_tautology_ban_lint.hexa --file <this>`.
-- own#33 ai-native verify-pattern Block A-G template.
 
 ## §21 IMPACT
 
@@ -1058,7 +1025,6 @@ Born-Wolf 1999 §8 for hex-aperture diffraction flare, Cox 1955 for
 silver-halide grain, Cartier-Bresson 1952 for decisive-moment freeze,
 Wu et al. ICASSP 2023 for CLAP scene-music match, distilled VLM for
 title-card. None of these targets are n=6 force-fit; all are physical-
-or algorithmic-limit values per own#32.
 
 The empirical gate is genuinely time-boxed: F-MC-MVP-1..5 90-day
 falsifiers fire 2026-08-30 / 2026-09-30 against a 100-user TestFlight
@@ -1085,8 +1051,6 @@ from. The TikTok / Gen-Z #maincharacter market signal (5B+ /
 ## mk-history
 
 - 2026-05-01T19:10:00Z — initial mk1 PHYSICAL-LIMIT registration
-  (alien-grade 10). §7 VERIFY structured as Block A-G per own#33
-  ai-native verify-pattern: own#2 master identity (Block A separable
   mathematical fact); 2.39:1 anamorphic letterbox geometry from
   Cinerama / SMPTE ST 195 (Block B); Lucas-Kanade 1981 pyramidal
   optical-flow NPU budget (Block C); 6-blade hex-aperture flare-
@@ -1104,7 +1068,6 @@ from. The TikTok / Gen-Z #maincharacter market signal (5B+ /
   + ITU-R MOS protocol + sister inheritance to camera-filter-app.
   Falsifier targets are physical-limit-anchored (frame p95 ≤ 25 ms,
   N=30 A/B preference ≥ 50%, genre accuracy ≥ 70%, music-MOS ≥ 4.0,
-  flare divergence ≤ 5°). own#32 physical-limit-alternative-framing
   applied — no n=6 force-fit on app design constants. Sister to
   `domains/apps/camera-filter-app` (apps axis 13th, both alien-grade
   10 PHYSICAL-LIMIT, 2026-05-01).

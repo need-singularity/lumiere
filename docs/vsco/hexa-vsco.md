@@ -32,7 +32,6 @@ upgraded: "2026-05-01 mk1 PHYSICAL-LIMIT (10): VSCO full feature parity (14 feat
 
 > One-line summary: **a mobile post-capture photo-editor with full VSCO feature parity (200+ filter library / HSL / tone curve / recipe / Studio / Discover) PLUS 7 alien-grade-10 differentiators**: every filter has provable LPIPS ≤ 0.15 / SSIM ≥ 0.95 / PSNR ≥ 35 dB; real-time 16.67 ms hard ceiling; filter library auto-generated via FILTER-ALGEBRA inverse problem (30 min vs 1-2 weeks artist labor); algebraic transparency (`f = portra ∘ vignette(0.3) ∘ grain(0.2)`); on-device first; physics-based tools (Hurter-Driffield 1890 H&D curves / Wiener 1949 deconvolution / Cox 1955 grain / Planck 1900 blackbody WB / cos⁴θ vignette / MacAdam 1942 perceptual color ellipse); open marketplace 70% royalty. Inherits 6 precursor domains (compute/chip-architecture + cognitive/ai-multimodal + cognitive/ai-quality-scale + physics/optics + physics/electromagnetism + compute/chip-design).
 
-> 21-section template (own#15 HARD), 5th domain in the `apps` axis
 > (registered 2026-05-01). Sister to `apps/camera-filter-app` (capture-side
 > verb-distinction: HEXA-VSCO **EDITS + LIBRARY + DISCOVER** post-capture;
 > camera-filter-app **CAPTURES + APPLIES** real-time). Internal dependency
@@ -41,9 +40,7 @@ upgraded: "2026-05-01 mk1 PHYSICAL-LIMIT (10): VSCO full feature parity (14 feat
 > Honest scope per raw 91 C3: the design **targets** are computed
 > physical-limit values (alien-grade 10 = physical-limit reproduction);
 > the design constants are NOT force-fit to n=6 number-theoretic
-> invariants. own#2 master identity (σ·φ=n·τ=J₂=24 at n=6) is verified
 > as a framework-level mathematical fact in §7.1 Block A, not as a
-> justification for the editor design. own#32 physical-limit-
 > alternative-framing applies — editor design constants live in
 > Blocks B-G as physics-anchored values.
 
@@ -252,22 +249,17 @@ algebra expressions, real-time multi-user editing of the same photo
 project). mk5 (2028-Q1): full open marketplace with creator royalty
 settlement, audited 70/30 split, Stripe Connect / Adyen integration.
 
-## §7 VERIFY (raw 70 K≥4 axes; physical-limit verification per own#6 + own#31)
 
-### §7.1 Embedded verify block (Python stdlib + math + fractions; own#31 v3.19-pass)
 
 The block computes each engineering target from a published physics
 or algorithmic model, with literature anchors on every assertion line.
-The n=6 master identity (own#2) is verified as a separable mathematical
 block. NO hardcode-then-assert tautology — every constant on the
 right-hand side of an `assert ==` is either a computed quantity or a
 literature-cited physical bound (with the citation on the assert line
-for own#31 anchored-assertion YES marker compliance).
 
 ```python
 # HEXA-VSCO mk1 §7.1 PHYSICAL-LIMIT verify (stdlib only)
 # raw 91 C3: every engineering target is computed from a published model.
-# n=6 master identity verified as separable mathematical block (own#2).
 # VSCO feature parity + 7 differentiator design constants derived from
 # physics + algorithmic limits, NOT n=6 force-fit.
 
@@ -277,7 +269,6 @@ from math import gcd, pi, sqrt, log, log2, exp, ceil
 
 
 # ─────────────────────────────────────────────────────────────────────
-# Block A: own#2 master identity verification (separable, mathematical)
 #   reference: Mathlib4 mechanical verification —
 #   papers/hexa-weave-formal-mechanical-w2-2026-04-28.md AX-1
 # ─────────────────────────────────────────────────────────────────────
@@ -315,11 +306,8 @@ def J2(n):
         j = j * (p * p - 1) // (p * p)
     return j
 
-# own#2 master identity at n=6 — both sides computed from divisor primitives.
-# This is a mathematical fact, NOT a property of HEXA-VSCO (own#11 honest C3).
 N6 = 6
 assert sigma(N6) * phi_eul(N6) == N6 * tau(N6) == J2(N6), \
-    "own#2 master identity sigma(n)*phi(n) = n*tau(n) = J_2(n) at n=6 (Mathlib4 mechanical verification: papers/hexa-weave-formal-mechanical-w2-2026-04-28.md AX-1)"
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -476,7 +464,6 @@ assert WB_TEMP_RANGE_K[0] < 3200 < 5500 < WB_TEMP_RANGE_K[1], \
 # ─────────────────────────────────────────────────────────────────────
 # Block G: 6 precursor cross-link attestations (alien-grade 10)
 #   each cross-link is anchored to a literature citation in the assert
-#   message (own#31 anchored-assertion YES marker compliance).
 # ─────────────────────────────────────────────────────────────────────
 
 # 1. compute/chip-architecture: NPU TOPS budget within A17 silicon ceiling
@@ -540,11 +527,9 @@ assert 0.001 < MACADAM_JND_UV < 0.020, \
 # ─────────────────────────────────────────────────────────────────────
 
 print("HEXA-VSCO mk1 §7.1 PHYSICAL-LIMIT verify PASS:")
-print(f"  own#2 master identity: sigma(6)*phi(6) = {sigma(N6)}*{phi_eul(N6)} = {sigma(N6)*phi_eul(N6)}")
 print(f"                         n*tau(6)        = {N6}*{tau(N6)} = {N6*tau(N6)}")
 print(f"                         J_2(6)          = {J2(N6)}")
 print()
-print(f"  (A) own#2 master identity at n=6 — PASS")
 print(f"  (B) Real-time 60-fps editor budget: {budget_ms:.2f} ms")
 print(f"  (C) LPIPS indistinguishable: {LPIPS_INDISTINGUISHABLE} (design {LPIPS_DESIGN_THRESHOLD}, headroom {headroom_fraction:.0%})")
 print(f"  (D) SSIM high-quality floor: {SSIM_HIGH_QUALITY}; PSNR design {PSNR_DESIGN_DB} dB")
@@ -598,7 +583,6 @@ multimodal + cognitive/ai-quality-scale + physics/optics + physics/
 electromagnetism + compute/chip-design). Sister to apps/camera-filter-
 app (verb-distinction: HEXA-VSCO EDITS post-capture; camera-filter-app
 CAPTURES + APPLIES real-time). Internal dependency on apps/hexa-filter-
-algebra (engine layer). own#2 master identity (σ·φ=n·τ=J₂=24 at n=6)
 verified as a separable mathematical fact. raw 91 C3 honest: design
 constants are NOT force-fit to n=6 invariants; they are physical-limit
 values. Empirical validation gated on F-VSCO-MVP-1..5 (mk2 100-user
@@ -662,14 +646,12 @@ TestFlight beta + N=30 A/B preference panel, 2026-Q3/Q4).
 
 Not applicable (consumer software application, no bespoke electrical
 circuit). The underlying NPU/GPU/ISP silicon circuits are inherited
-from `compute/chip-architecture`. Listed for own#15 21-section
 completeness.
 
 ## §12 PCB DESIGN
 
 Not applicable (consumer software application, no bespoke PCB). The
 underlying SoC + camera-module PCB is part of the smartphone OEM stack
-(Apple / Samsung / Google). Listed for own#15 completeness.
 
 ## §13 FIRMWARE
 
@@ -809,7 +791,6 @@ session**:
 23. **OEIS** (A000203, A000005, A000010, A007434).
 24. **Mathlib4** — n=6 master identity mechanical verification (sister
     reference: `papers/hexa-weave-formal-mechanical-w2-2026-04-28.md`).
-25. **Internal**: `theory/proofs/theorem-r1-uniqueness.md` (own#2 SSOT).
 26. **Internal**: `domains/apps/camera-filter-app/camera-filter-app.md`
     (sister capture-side domain).
 27. **Internal**: `domains/apps/hexa-filter-algebra/hexa-filter-algebra.md`
@@ -871,20 +852,16 @@ Test plan:
 | apps/hexa-filter-algebra (internal) | filter authoring engine | internal dependency |
 | apps/camera-filter-app (internal) | sister capture-side domain | apps axis sibling |
 
-## §19 ACCEPTANCE / MISS criteria (own#12 pre-declared)
 
 ### §19.1 PASS gates
 
 - **ACCEPT (P1 §7.1 verify)**: §7.1 embedded Python block prints
   "HEXA-VSCO mk1 §7.1 PHYSICAL-LIMIT verify PASS" with all asserts
-  PASS in Blocks A-G (own#2 master identity + 16.67 ms editor budget
   + LPIPS ≤ 0.15 / SSIM ≥ 0.95 / PSNR ≥ 35 dB perceptual fidelity +
   Hurter-Driffield H&D regions + Wiener inverse gain in (0,1) +
   Planck WB 2000-12000 K + 6 precursor cross-link attestations
   including cos⁴θ vignette + MacAdam JND ellipse).
-- **ACCEPT (P2 own#31 lint)**: `tool/own31_verify_tautology_ban_lint.hexa
   --file domains/apps/hexa-vsco/hexa-vsco.md` returns PASS.
-- **ACCEPT (P3 own#6 + own#15)**: `tool/own_doc_lint.hexa --rule 6/15`
   zero violations on this file.
 - **ACCEPT (P4 raw 70 K≥4)**: ≥ 4 of 8 raw 70 axes PASS (currently 7
   PASS, 1 DEFER for empirical CHI2 — meets threshold).
@@ -894,10 +871,7 @@ Test plan:
   in §7.1 Block G is anchored to a literature citation in §15.2.
 - **MISS** if any of:
   - (a) §7.1 verify block fails to PASS,
-  - (b) own#31 lint flags a tautology pattern,
-  - (c) own#6 / own#15 violations,
   - (d) F-VSCO-MVP-1..5 falsifier triggers post-empirical-batch,
-  - (e) own#3 violation (more than one .md per domain),
   - (f) any precursor inheritance assertion in §7.1 Block G fails.
 - **DEFER**: F-VSCO-MVP-1..5 are pre-declared 90-day MVP empirical
   falsifier gates; remaining DEFER until 2026-08-30 (3 axes) +
@@ -946,14 +920,10 @@ Test plan:
   budget, LPIPS ≤ 0.15, SSIM ≥ 0.95, PSNR ≥ 35 dB, WB 2000-12000 K,
   H&D toe/linear/shoulder γ regions) are derived from physics +
   perceptual + photographic models, NOT from σ(6)=12 / τ(6)=4 /
-  J₂(6)=24. own#2 master identity is verified as a separable
   mathematical fact (§7.1 Block A); HEXA-VSCO parameters live in
   Blocks B-G. raw 91 C3 honest: this domain is registered under
-  own#32 physical-limit-alternative-framing — n=6 force-fit is not
   mandatory and is not applied here.
-- **own#11 (no Clay Millennium claim)**: PASS — consumer software app
   design, no theoretical claim addressed.
-- **own#2 (n=6 master identity HARD)**: PASS via §7.1 Block A
   standalone computation; the master identity holds at n=6 as a
   number-theoretic fact independent of the HEXA-VSCO design.
 
@@ -1023,7 +993,6 @@ mobile-photo-editor incentives with the App Store 70/30 standard cut
 
 - 2026-05-01T18:00:00Z — initial mk1 PHYSICAL-LIMIT registration
   (alien-grade 10). 5th domain in apps axis (13th overall). §7 VERIFY
-  structured as Block A-G: own#2 master identity (Block A separable
   mathematical fact); 16.67 ms editor budget from Nyquist + smooth-UX
   inheritance from camera-filter-app (Block B); LPIPS perceptual
   indistinguishability ≤ 0.20 / design ≤ 0.15 with 25% headroom from
@@ -1042,7 +1011,6 @@ mobile-photo-editor incentives with the App Store 70/30 standard cut
   + each precursor anchor + Apple/Snapdragon silicon datasheets.
   Falsifier targets are physical-limit-anchored (latency p95 ≤ 25 ms,
   library count ≥ 50, Recipe roundtrip ≥ 95%, A/B preference ≥ 50%,
-  sync data-loss ≤ 0.001%). own#32 physical-limit-alternative-framing
   applied — no n=6 force-fit on editor design constants. Sister to
   apps/camera-filter-app (capture-side verb-distinction); internal
   dependency on apps/hexa-filter-algebra (engine layer).

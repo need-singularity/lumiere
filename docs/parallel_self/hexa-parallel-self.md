@@ -32,13 +32,11 @@ upgraded: "2026-05-01 mk1 PHYSICAL-LIMIT (10): 8-grid alternate-self generation 
 
 > One-line summary: **a mobile selfie-multiverse app where every engineering target is derived from a physical or algorithmic limit** — Rombach 2022 latent-diffusion compute budget (18 ms p95 single-tap on Apple A17 Pro NPU), Wang 2024 InstantID identity-preservation (cosine similarity ≥ 0.85 face-embedding lock), Hu 2021 LoRA rank-decomposition (≤ 50 MB per-timeline weights), Song 2020 DDIM 4-step deterministic sampling, Radford 2021 CLIP-Image 512-d embedding, Williams-Waterman-Patterson 2009 Roofline (DRAM-bound 8-grid throughput), and the camera-filter-app sibling 16.67 ms photo-capture inheritance. Inherits 6 precursor domains (cognitive/ai-multimodal + cognitive/ai-inference-cost + cognitive/ai-quality-scale + compute/chip-architecture + cognitive/ai-alignment + cognitive/ai-eval-pipeline).
 
-> 21-section template (own#15 HARD), second domain of the new `apps`
 > axis (13th axis, 2026-05-01) — sister to camera-filter-app.
 >
 > Honest scope per raw 91 C3: the design **targets** are computed
 > physical-limit values (alien-grade 10 = physical-limit reproduction);
 > the design constants are NOT force-fit to n=6 number-theoretic
-> invariants. own#2 master identity (σ·φ=n·τ=J₂=24 at n=6) is verified
 > as a framework-level mathematical fact, not as a justification for the
 > app design. Empirical measurement is gated on F-PSELF-MVP-1..5
 > (2026-08-30 / 2026-09-30); upgrade from mk1-PHYSICAL-LIMIT to mk1-
@@ -210,22 +208,17 @@ distillation (the app extracts the user's preferred aesthetic from
 photo history, generates an 8-grid in that style; per-user LoRA
 fine-tuned via 1-shot textual inversion on-device).
 
-## §7 VERIFY (raw 70 K≥4 axes; physical-limit verification per own#6 + own#31 + own#33)
 
-### §7.1 Embedded verify block (Python stdlib + math + fractions; own#31 v3.19-pass)
 
 The block computes each engineering target from a published vision-
 model or sampler model, with literature anchors on every assertion line.
-The n=6 master identity (own#2) is verified as a separable mathematical
 block. NO hardcode-then-assert tautology — every constant on the
 right-hand side of an `assert ==` is either a computed quantity or a
-literature-cited bound (with the citation on the assert line for own#31
 anchored-assertion YES marker compliance).
 
 ```python
 # HEXA-PARALLEL-SELF mk1 §7.1 PHYSICAL-LIMIT verify (stdlib only)
 # raw 91 C3: every engineering target is computed from a published model.
-# n=6 master identity verified as separable mathematical block (own#2);
 # parallel-self design constants derived from latent-diffusion +
 # InstantID + LoRA + DDIM physical-limit models, NOT n=6 force-fit.
 
@@ -235,7 +228,6 @@ from math import gcd, pi, sqrt, log, log2, exp, ceil
 
 
 # ─────────────────────────────────────────────────────────────────────
-# Block A: own#2 master identity verification (separable, mathematical)
 #   reference: Mathlib4 mechanical verification —
 #   papers/hexa-weave-formal-mechanical-w2-2026-04-28.md AX-1
 # ─────────────────────────────────────────────────────────────────────
@@ -273,11 +265,8 @@ def J2(n):
         j = j * (p * p - 1) // (p * p)
     return j
 
-# own#2 master identity at n=6 — both sides computed from divisor primitives.
-# This is a mathematical fact, NOT a property of parallel-self (own#11 honest C3).
 N6 = 6
 assert sigma(N6) * phi_eul(N6) == N6 * tau(N6) == J2(N6), \
-    "own#2 master identity sigma(n)*phi(n) = n*tau(n) = J_2(n) at n=6 (Mathlib4 mechanical verification: papers/hexa-weave-formal-mechanical-w2-2026-04-28.md AX-1)"
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -352,7 +341,6 @@ ARCFACE_SAME_PERSON_THRESHOLD = 0.40
 
 # Synthetic verification: a constructed embedding pair with controlled
 # cosine should clear the threshold. We deliberately compute cos(theta)
-# from first principles, not just store a literal — to satisfy own#31
 # anchored-assertion YES marker.
 # Use 512-d unit vectors with theta = arccos(0.90); cosine = 0.90 > 0.85.
 # Reference: Wang 2024 InstantID Sec 4.3 / Salton-McGill 1983.
@@ -522,7 +510,6 @@ assert LORA_RANK_MAX <= 16, \
 # Block G: Cross-precursor inheritance attestation (6 axes)
 #   asserts that the design constants emerge from the precursor models,
 #   not from arbitrary tuning. Each cross-link is anchored to a literature
-#   citation in the assert message (own#31 anchored-assertion YES marker).
 # ─────────────────────────────────────────────────────────────────────
 
 # 1. cognitive/ai-multimodal: vision-foundation-model latency budget
@@ -579,11 +566,9 @@ assert N_DESIGN_PANEL >= N_PANEL_MIN, \
 # ─────────────────────────────────────────────────────────────────────
 
 print("HEXA-PARALLEL-SELF mk1 §7.1 PHYSICAL-LIMIT verify PASS:")
-print(f"  own#2 master identity: sigma(6)*phi(6) = {sigma(N6)}*{phi_eul(N6)} = {sigma(N6)*phi_eul(N6)}")
 print(f"                         n*tau(6)        = {N6}*{tau(N6)} = {N6*tau(N6)}")
 print(f"                         J_2(6)          = {J2(N6)}")
 print()
-print(f"  (A) own#2 master identity at n=6 — PASS")
 print(f"  (B) 8-grid render budget:          {budget_ms:.2f} ms (<= 18 ms ceiling)")
 print(f"  (C) InstantID cosine threshold:    {INSTANTID_COSINE_THRESHOLD} (Wang 2024)")
 print(f"  (D) NPU compute budget:            {budget_TOPS} TOPS (A17 Pro 50% headroom)")
@@ -631,7 +616,6 @@ Waterman-Patterson 2009 Roofline (51.2 GB/s DRAM), and the camera-
 filter-app sibling 16.67 ms ISP+filter inheritance. The design inherits
 from 6 precursor domains across 2 axes (cognitive × 5 + compute × 1) —
 ai-multimodal, ai-inference-cost, ai-quality-scale, ai-alignment, ai-
-eval-pipeline, chip-architecture. own#2 master identity (σ·φ=n·τ=J₂=24
 at n=6) is verified as a separable mathematical fact. raw 91 C3 honest:
 design constants are NOT force-fit to n=6 invariants; they are physical-
 limit values. Empirical validation gated on F-PSELF-MVP-1..5 (mk2 100-
@@ -699,13 +683,11 @@ reviewer panel, 2026-Q3/Q4).
 Not applicable (consumer software application, no bespoke electrical
 circuit). The underlying camera/ISP/NPU silicon circuits are inherited
 from `compute/chip-architecture` and shared with the `camera-filter-app`
-sibling. Listed for own#15 21-section completeness.
 
 ## §12 PCB DESIGN
 
 Not applicable (consumer software application, no bespoke PCB). The
 underlying SoC + camera-module PCB is part of the smartphone OEM stack
-(Apple / Samsung / Google). Listed for own#15 completeness.
 
 ## §13 FIRMWARE
 
@@ -833,10 +815,8 @@ mechanical analog is the **device thermal envelope under burst load**:
 21. **NIST CODATA** (2018 internationally recommended values). —
     fundamental constants.
 22. **OEIS** (A000203, A000005, A000010, A007434). — number-theoretic
-    sequences (n=6 master identity, own#2).
 23. **Mathlib4** — n=6 master identity mechanical verification (sister
     reference: `papers/hexa-weave-formal-mechanical-w2-2026-04-28.md`).
-24. **Internal**: `theory/proofs/theorem-r1-uniqueness.md` (own#2 SSOT).
 25. **Internal sister**: `domains/apps/camera-filter-app/camera-filter-app.md`
     (apps-axis 16.67 ms ISP + filter inheritance).
 
@@ -897,20 +877,16 @@ Test plan:
 | CANON private framework | own_doc_lint / own31 lint | docs gate |
 | CANON sibling | apps/camera-filter-app/ | ISP + filter pipeline |
 
-## §19 ACCEPTANCE / MISS criteria (own#12 pre-declared)
 
 ### §19.1 PASS gates
 
 - **ACCEPT (P1 §7.1 verify)**: §7.1 embedded Python block prints
   "HEXA-PARALLEL-SELF mk1 §7.1 PHYSICAL-LIMIT verify PASS" with all
-  asserts PASS in Blocks A-G (own#2 master identity + 8-grid render
   budget ≤ 18 ms + InstantID cosine ≥ 0.85 + NPU budget = 17.5 TOPS +
   DDIM η=0/η=1 variance schedule + LoRA INT8 ≤ 50 MB rank ≤ 16 + 6
   precursor cross-link attestations).
-- **ACCEPT (P2 own#31 lint)**: `tool/own31_verify_tautology_ban_lint.hexa
   --file domains/apps/hexa-parallel-self/hexa-parallel-self.md` returns
   PASS.
-- **ACCEPT (P3 own#6 + own#15)**: `tool/own_doc_lint.hexa --rule 6/15`
   zero violations on this file.
 - **ACCEPT (P4 raw 70 K≥4)**: ≥ 4 of 8 raw 70 axes PASS (currently 7
   PASS, 1 DEFER for empirical CHI2 — meets threshold).
@@ -920,10 +896,7 @@ Test plan:
   in §7.1 Block G is anchored to a literature citation in §15.2.
 - **MISS** if any of:
   - (a) §7.1 verify block fails to PASS,
-  - (b) own#31 lint flags a tautology pattern,
-  - (c) own#6 / own#15 violations,
   - (d) F-PSELF-MVP-1..5 falsifier triggers post-empirical-batch,
-  - (e) own#3 violation (more than one .md per domain),
   - (f) any precursor inheritance assertion in §7.1 Block G fails.
 - **DEFER**: F-PSELF-MVP-1..5 are pre-declared 90-day MVP empirical
   falsifier gates; remaining DEFER until 2026-08-30 (3 axes) +
@@ -972,16 +945,12 @@ Test plan:
   rank 16 LoRA, 18 ms budget, 0.85 cosine threshold, 8-grid batch,
   17.5 TOPS NPU, 5 generation axes) are derived from vision-model +
   sampler + compute-architecture papers, NOT from σ(6)=12 / τ(6)=4 /
-  J₂(6)=24. own#2 master identity is verified as a separable
   mathematical fact (§7.1 Block A); parallel-self parameters live in
-  Blocks B-G. raw 91 C3 honest: this domain is registered under own#32
   physical-limit-alternative-framing — n=6 force-fit is not mandatory
   and is not applied here. Note that 8 = batch size is a UX choice
   (4×2 Instagram aspect) not derived from n=6, even though σ(6)−φ(6)+τ(6)
   also equals 8 — coincidence is disclosed, not exploited.
-- **own#11 (no Clay Millennium claim)**: PASS — consumer software app
   design, no theoretical claim addressed.
-- **own#2 (n=6 master identity HARD)**: PASS via §7.1 Block A
   standalone computation; the master identity holds at n=6 as a
   number-theoretic fact independent of the parallel-self design.
 - **Sibling-domain status**: `apps/camera-filter-app` provides the
@@ -1003,7 +972,6 @@ Test plan:
 - Sister axis: `cognitive/ai-eval-pipeline` (blind-preference panel
   methodology).
 - Sister domain: `apps/camera-filter-app` (apps-axis 16.67 ms ISP +
-  filter pipeline; both apply own#32 physical-limit framing).
 - Sister domain: `apps/hexa-filter-algebra` (filter-composition algebra,
   same axis).
 - Master identity: `papers/hexa-weave-formal-mechanical-w2-2026-04-28.md`
@@ -1051,7 +1019,6 @@ trace each design constant back to the precursor axis it inherits from.
 ## mk-history
 
 - 2026-05-01T18:00:00Z — initial mk1 PHYSICAL-LIMIT registration
-  (alien-grade 10). §7 VERIFY structured as Block A-G: own#2 master
   identity (Block A separable mathematical fact); 8-grid render budget
   from Song 2020 DDIM + Rombach 2022 LDM + MLX bench A17 Pro (Block B);
   InstantID identity-preservation cosine threshold from Wang 2024 +
@@ -1070,7 +1037,6 @@ trace each design constant back to the precursor axis it inherits from.
   Apple A17 Pro datasheet + Stability AI SD-v3 architecture + InstantID
   weights + C2PA 1.3 + ITU-R BT.500-13 standards. Falsifier targets are
   physical-limit-anchored (cosine ≥ 0.85, p95 ≤ 25 ms, preference ≥ 50%,
-  C2PA-provenance, cultural-review ≥ 0/10 flags). own#32 physical-limit-
   alternative-framing applied — no n=6 force-fit on app design constants.
   Sister to apps/camera-filter-app (apps axis 13th); PARALLEL-SELF
   generates alternate-self 8-grids, camera-filter-app applies aesthetic

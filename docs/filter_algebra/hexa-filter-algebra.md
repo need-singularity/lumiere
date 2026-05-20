@@ -32,15 +32,12 @@ upgraded: "2026-05-01 mk1 PHYSICAL-LIMIT (10): 9 primitive operations + composit
 
 > One-line summary: **a filter authoring/composition framework where filters are algebraic expressions over 9 primitive operations, with provable LPIPS/SSIM/PSNR quality bounds, automatic inverse-problem generation from N=5 reference image pairs, and 16.67 ms real-time compilation**. Sister domain to `apps/camera-filter-app` (apps axis 13th): camera-filter-app **APPLIES** filters, HEXA-FILTER-ALGEBRA **AUTHORS / COMPILES** them. Each engineering target is derived from a published physics or algorithmic limit: Shannon 1948 Data Processing Inequality (filter cannot exceed 24 bits/pixel for 8-bit RGB), Wiener 1949 deconvolution lower bound on noise amplification, Tishby 1999 information bottleneck (33³ LUT optimal at K-L threshold), Cox 1955 cluster Poisson grain model, Reinhard-Devlin 2002 photographic operator, Williams-Waterman-Patterson 2009 Roofline (real-time scheduling), Zhang 2018 LPIPS perceptual fidelity. Inherits 6 precursor domains.
 
-> 21-section template (own#15 HARD), 2nd domain in the apps axis
 > (registered 2026-05-01, sister to camera-filter-app).
 >
 > Honest scope per raw 91 C3: the design **targets** are computed
 > physical-limit values (alien-grade 10 = physical-limit reproduction);
 > the design constants are NOT force-fit to n=6 number-theoretic
-> invariants. own#2 master identity (σ·φ=n·τ=J₂=24 at n=6) is verified
 > as a framework-level mathematical fact in §7.1 Block A, not as a
-> justification for the algebra design. own#32 physical-limit-
 > alternative-framing applies — algebra design constants live in
 > Blocks B-G as physics-anchored values.
 
@@ -257,23 +254,18 @@ multi-user editing with conflict resolution. mk5 (2029+):
 marketplace + on-chain royalty — algebra expressions as NFT-style
 assets with per-application royalty distribution.
 
-## §7 VERIFY (raw 70 K≥4 axes; physical-limit verification per own#6 + own#31)
 
-### §7.1 Embedded verify block (Python stdlib + math + fractions; own#31 v3.19-pass)
 
 The block computes each engineering target from a published physics,
 information-theoretic, or algorithmic model, with literature anchors
-on every assertion line. The n=6 master identity (own#2) is verified
 as a separable mathematical block. NO hardcode-then-assert tautology
 — every constant on the right-hand side of an `assert ==` is either
 a computed quantity or a literature-cited bound (with the citation
-on the assert line for own#31 anchored-assertion YES marker
 compliance).
 
 ```python
 # HEXA-FILTER-ALGEBRA mk1 §7.1 PHYSICAL-LIMIT verify (stdlib only)
 # raw 91 C3: every engineering target is computed from a published model.
-# n=6 master identity verified as separable mathematical block (own#2);
 # filter-algebra design constants derived from physics + algorithmic
 # limits, NOT n=6 force-fit.
 
@@ -283,7 +275,6 @@ from math import gcd, pi, sqrt, log, log2, exp, ceil
 
 
 # ─────────────────────────────────────────────────────────────────────
-# Block A: own#2 master identity verification (separable, mathematical)
 #   reference: Mathlib4 mechanical verification —
 #   papers/hexa-weave-formal-mechanical-w2-2026-04-28.md AX-1
 # ─────────────────────────────────────────────────────────────────────
@@ -321,11 +312,8 @@ def J2(n):
         j = j * (p * p - 1) // (p * p)
     return j
 
-# own#2 master identity at n=6 — both sides computed from divisor primitives.
-# This is a mathematical fact, NOT a property of filter-algebra (own#11 honest C3).
 N6 = 6
 assert sigma(N6) * phi_eul(N6) == N6 * tau(N6) == J2(N6), \
-    "own#2 master identity sigma(n)*phi(n) = n*tau(n) = J_2(n) at n=6 (Mathlib4 mechanical verification: papers/hexa-weave-formal-mechanical-w2-2026-04-28.md AX-1)"
 
 
 # ─────────────────────────────────────────────────────────────────────
@@ -472,7 +460,6 @@ assert depth5_budget > SMOOTH_UX_BUDGET_MS, \
 # Block G: Cross-precursor inheritance attestation (6 axes)
 #   asserts that the design constants emerge from the precursor physics,
 #   not from arbitrary tuning.  Each cross-link is anchored to a literature
-#   citation in the assert message (own#31 anchored-assertion YES marker).
 # ─────────────────────────────────────────────────────────────────────
 
 # 1. compute/chip-architecture: NPU TOPS budget inherited from camera-filter-app
@@ -515,9 +502,7 @@ assert OI_typical_filter > OI_compute_bound_threshold, \
 # ─────────────────────────────────────────────────────────────────────
 
 print("HEXA-FILTER-ALGEBRA mk1 §7.1 PHYSICAL-LIMIT verify PASS:")
-print(f"  own#2 master identity at n=6: sigma*phi = {sigma(N6)*phi_eul(N6)} = n*tau = {N6*tau(N6)} = J_2 = {J2(N6)}")
 print()
-print(f"  (A) own#2 master identity at n=6 — PASS")
 print(f"  (B) Color-matrix associativity max diff: {max_diff:.2e}")
 print(f"  (C) Shannon DPI bound: {H_24bit_RGB} bits/pixel for 8-bit RGB")
 print(f"  (D) Wiener inverse gain at near-zero MTF: {gain_at_diffraction:.4f}")
@@ -567,7 +552,6 @@ for inverse-problem reference embedding), cognitive/ai-quality-scale
 (LPIPS / SSIM / PSNR perceptual metrics), physics/optics (MTF +
 Wiener bound on sharpening), physics/electromagnetism (CIE 1931
 color matching 360–830 nm), compute/chip-design (kernel-fusion
-compilation + Roofline operational intensity). own#2 master identity
 (σ·φ=n·τ=J₂=24 at n=6) is verified as a separable mathematical fact.
 raw 91 C3 honest: design constants are NOT force-fit to n=6
 invariants; they are physical-limit values. Sister relationship to
@@ -632,14 +616,12 @@ real-time budget. Empirical validation gated on F-FA-MVP-1..5
 Not applicable (consumer software framework, no bespoke electrical
 circuit). The underlying NPU/GPU/ISP silicon circuits are inherited
 from `compute/chip-architecture` (sister: camera-filter-app §11).
-Listed for own#15 21-section completeness.
 
 ## §12 PCB DESIGN
 
 Not applicable (consumer software framework, no bespoke PCB). The
 underlying SoC + camera-module PCB is part of the smartphone OEM
 stack (Apple / Samsung / Google), inherited via camera-filter-app
-§12. Listed for own#15 completeness.
 
 ## §13 FIRMWARE
 
@@ -772,10 +754,8 @@ camera-filter-app**:
 19. **NIST CODATA** (2018 internationally recommended values). —
     fundamental constants reference.
 20. **OEIS** (A000203, A000005, A000010, A007434). — number-theoretic
-    sequences (n=6 master identity, own#2).
 21. **Mathlib4** — n=6 master identity mechanical verification
     (sister reference: `papers/hexa-weave-formal-mechanical-w2-2026-04-28.md`).
-22. **Internal**: `theory/proofs/theorem-r1-uniqueness.md` (own#2 SSOT).
 
 **Standards:**
 
@@ -845,20 +825,16 @@ Test plan:
 | pest authors | pest 2.7+ Rust parsing-combinator crate | DSL parser |
 | CANON private framework | own_doc_lint / own31 lint / camera-filter-app sister | docs gate + sister consumer |
 
-## §19 ACCEPTANCE / MISS criteria (own#12 pre-declared)
 
 ### §19.1 PASS gates
 
 - **ACCEPT (P1 §7.1 verify)**: §7.1 embedded Python block prints
   "HEXA-FILTER-ALGEBRA mk1 §7.1 PHYSICAL-LIMIT verify PASS" with
-  all asserts PASS in Blocks A-G (own#2 master identity + color-
   matrix associativity + Shannon DPI + Wiener inverse + LUT
   information bottleneck + 16.67 ms depth-4 budget + 6 precursor
   cross-link attestations).
-- **ACCEPT (P2 own#31 lint)**: `tool/own31_verify_tautology_ban_lint.hexa
   --file domains/apps/hexa-filter-algebra/hexa-filter-algebra.md`
   returns PASS.
-- **ACCEPT (P3 own#6 + own#15)**: `tool/own_doc_lint.hexa --rule
   6/15` zero violations on this file.
 - **ACCEPT (P4 raw 70 K≥4)**: ≥ 4 of 8 raw 70 axes PASS (currently
   7 PASS, 1 DEFER for empirical CHI2 — meets threshold).
@@ -870,10 +846,7 @@ Test plan:
   §15.2.
 - **MISS** if any of:
   - (a) §7.1 verify block fails to PASS,
-  - (b) own#31 lint flags a tautology pattern,
-  - (c) own#6 / own#15 violations,
   - (d) F-FA-MVP-1..5 falsifier triggers post-empirical-batch,
-  - (e) own#3 violation (more than one .md per domain),
   - (f) any precursor inheritance assertion in §7.1 Block G fails.
 - **DEFER**: F-FA-MVP-1..5 are pre-declared 90-day MVP empirical
   falsifier gates; remaining DEFER until 2026-08-30 (associativity
@@ -927,14 +900,10 @@ Test plan:
   (24 bits/pixel DPI ceiling, Wiener gain bounded < 1, 33³ LUT,
   depth-4 chain, LPIPS ≤ 0.15) are derived from information theory
   + signal processing + perceptual psychometrics, NOT from σ(6)=12
-  / τ(6)=4 / J₂(6)=24. own#2 master identity is verified as a
   separable mathematical fact (§7.1 Block A); FILTER-ALGEBRA
   parameters live in Blocks B-G. raw 91 C3 honest: this domain is
-  registered under own#32 physical-limit-alternative-framing —
   n=6 force-fit is not mandatory and is not applied here.
-- **own#11 (no Clay Millennium claim)**: PASS — consumer software
   framework, no theoretical claim addressed.
-- **own#2 (n=6 master identity HARD)**: PASS via §7.1 Block A
   standalone computation; the master identity holds at n=6 as a
   number-theoretic fact independent of the FILTER-ALGEBRA design.
 - **Sister relationship to camera-filter-app**: distinct verb pair
@@ -966,9 +935,7 @@ Test plan:
 - Lint gates: `tool/own_doc_lint.hexa --rule 6/15`,
   `tool/own31_verify_tautology_ban_lint.hexa --file <this>`.
 - Inaugural-domain commit: 3c5d2c9a (camera-filter-app + cat-food).
-- Tier-1 lint commit: 84d63d93 (own#31 v3.19 + own#33 verify
   pattern).
-- Governance commit: 18376d4b (own#34 + own#35 ai-native + hive-
   resource-only).
 
 ## §21 IMPACT
@@ -1021,7 +988,6 @@ that turns the apps axis into a multi-verb intra-axis structure.
 
 - 2026-05-01T17:55:00Z — initial mk1 PHYSICAL-LIMIT registration
   (alien-grade 10) as the 2nd domain in the apps axis (13th
-  overall). §7 VERIFY structured as Block A-G: own#2 master
   identity (Block A separable mathematical fact); color-matrix
   composition associativity (Block B); Shannon Data Processing
   Inequality 24-bits/pixel ceiling (Block C); Wiener inverse SNR-
@@ -1038,7 +1004,6 @@ that turns the apps axis into a multi-verb intra-axis structure.
   filter-app sister + ISO/ITU standards. Falsifier targets are
   physical-limit-anchored (associativity zero failures, inverse
   LPIPS ≤ 0.20, depth-4 ≤ 16.67 ms p95, A/B preference ≥ 40%,
-  commute-claim correctness 100%). own#32 physical-limit-
   alternative-framing applied — no n=6 force-fit on FILTER-ALGEBRA
   design constants. Sister relationship to camera-filter-app
   (apps-axis intra-axis pairing) declared with distinct
